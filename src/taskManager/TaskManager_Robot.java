@@ -69,11 +69,11 @@ public class TaskManager_Robot extends ArbiAgent {
 	}
 	
 	
-	public TaskManager_Robot(String robotID) {
+	public TaskManager_Robot(String robotID, String ip, int port) {
 		
 		System.out.println("start");
 		System.out.println("robotID : " + robotID);
-		initAddress(robotID);
+		initAddress(robotID,ip,port);
 		interpreter = JAM.parse(new String[] { "./TaskManagerRobotPlan/boot.jam" });
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		
@@ -87,37 +87,39 @@ public class TaskManager_Robot extends ArbiAgent {
 		init();
 	}
 	
-	public void initAddress(String robotID) {
-		
+	public void initAddress(String robotID, String ip, int port) {
+
+		String brokerURL = "";
+		if(ip.equals("env")) {
+			brokerURL = "tcp://" + System.getenv("JMS_BROKER");
+		} else {
+			brokerURL = "tcp://" + ip;
+		}
 		ENV_ROBOT_NAME = robotID;
-		String ip = "tcp://172.16.165.171";
-		String port ="";
+		
 		
 		if (ENV_ROBOT_NAME.equals("AMR_LIFT1")) {
 			ENV_AGENT_NAME = "Lift1";
-			ENV_JMS_BROKER = ip + ":61116";
 			ENV_WAIT_VERTEX = 201;
 			ENV_CHARGE_VERTEX = 101;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		} else if (ENV_ROBOT_NAME.equals("AMR_LIFT2")) {
 			ENV_AGENT_NAME = "Lift2";
-			ENV_JMS_BROKER = ip + ":61115";
 			ENV_WAIT_VERTEX = 202;
 			ENV_CHARGE_VERTEX = 102;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_TOW1")) {
 			ENV_AGENT_NAME = "Tow1";
-			ENV_JMS_BROKER = ip + ":61114";
 			ENV_WAIT_VERTEX = 203;
 			ENV_CHARGE_VERTEX = 103;
 			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_TOW2")) {
 			ENV_AGENT_NAME = "Tow2";
-			ENV_JMS_BROKER = ip + ":61412";
 			ENV_WAIT_VERTEX = 204;
 			ENV_CHARGE_VERTEX = 104;
 			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
 		}
+		ENV_JMS_BROKER = brokerURL +":"+ port;
 				
 		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
 		REASONER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/TaskReasoner"; 
