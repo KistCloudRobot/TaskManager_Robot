@@ -1,0 +1,14 @@
+PREFIXES:
+	PREFIX arbi: <http://www.arbi.com//ontologies#>;
+
+Plan PERFORM loadPlanPackage(){
+	ID: "LoadLiftRobotPlan"
+	PRECONDITION:
+		FACT ExtraUtility($helper);
+	BODY:
+		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/behavior");
+		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/builtIn");
+		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/facts");
+		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/CarrierTask");
+		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/LIFT");
+}

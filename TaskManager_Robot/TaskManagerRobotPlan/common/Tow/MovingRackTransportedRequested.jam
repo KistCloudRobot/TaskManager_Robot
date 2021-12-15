@@ -1,0 +1,64 @@
+
+ PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		
+PLAN CONCLUDE MovingRackTransportedRequestedFrom($manager, $goalID, $goal){
+	ID: "http://www.arbi.com//MovingRackTransportedRequestedFrom"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT isro:ReasonerAddress($reasoner);
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "MovingRackTransportedRequestedFrom");
+		PERFORM isro:UpdateAgentTaskStatus("MovingRackTransportedRequestedFrom", "start");
+		
+		System.out.println("Requested Goal : " + $goal);
+		$manager = "Local";
+		PERFORM isro:UpdateAgentTaskStatus("MovingRackTransportedRequestedFrom", "complete");
+		PERFORM isro:endLog("CONCLUDE", "MovingRackTransportedRequestedFrom");
+		$communicationInstance.inform($reasoner, "(goalComplete (MovingRackTransportedRequestedFrom \"" + $manager +"\" " + $goalID + " " + $goal + "))");
+	UTILITY: 100; 
+}
+		
+		
+PLAN CONCLUDE PostMovingRackTransportedReportedTo($manager, $goalID, $goal) {
+	ID: "http://www.arbi.com//BuiltInPlan#PostMovingRackTransportedReportedTo"
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "PostMovingRackTransportedReportedTo");
+		
+		POST PERFORM MovingRackTransportedReportedTo($manager, $goalID, $goal);
+		RETRACT PostMovingRackTransportedReportedTo($manager, $goalID, $goal);
+		
+		PERFORM isro:endLog("CONCLUDE", "PostMovingRackTransportedReportedTo");
+		
+	UTILITY : 100000;
+}
+		
+PLAN PERFORM MovingRackTransportedReportedTo($manager, $goalID, $goal){
+	ID: "http://www.arbi.com//MovingRackTransportedReportedTo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT isro:ReasonerAddress($reasoner);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "MovingRackTransportedReportedTo");
+		PERFORM isro:UpdateAgentTaskStatus("MovingRackTransportedReportedTo", "start");
+		
+		RETRIEVE MovingRackTransportedRequestedFrom($m, $gID, $g);
+		System.out.println($m);
+		System.out.println($gID);
+		System.out.println($g);
+		System.out.println("Report Goal : " + $goal);
+
+		$goal = $glUtility.escapeGL($goal);
+		$receiver = "agent://www.arbi.com/" + $manager + "/TaskManager";		
+		$communicationInstance.inform($receiver,"(GoalReport (MovingRackTransported \"Tow2\" \""+ $goalID + "\" \""+ $goal +"\"))");
+		
+		RETRACT MovingRackTransportedRequestedFrom($m, $gID, $g);
+		
+		PERFORM isro:UpdateAgentTaskStatus("MovingRackTransportedReportedTo", "complete");
+		PERFORM isro:endLog("PERFORM", "MovingRackTransportedReportedTo");
+		$communicationInstance.inform($reasoner, "(goalComplete (MovingRackTransportedReportedTo \"Local\" \"" + $goalID + "\" " + $goal + "))");
+		perform ReturnToWait();
+	UTILITY: 100; 
+}

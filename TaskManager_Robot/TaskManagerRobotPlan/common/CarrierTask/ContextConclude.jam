@@ -1,0 +1,52 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN CONCLUDE RobotAt($robot, $vertex1, $vertex2) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotAt"
+	PRECONDITION :
+		
+	BODY:
+
+		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
+		$data = "(RobotAt \"" + $robot + "\" " + $vertex1 + " " + $vertex2 + ")";
+		PERFORM NotifyPermmittedContext($localAgent, $data);
+		
+	UTILITY : 100;
+}
+
+
+PLAN CONCLUDE BatteryRemain($robot, $battery) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionBatteryRemain"
+	BODY:
+		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
+		$data = "(BatteryRemain \"" + $robot + "\" " + $battery  + ")";
+		PERFORM NotifyPermmittedContext($localAgent, $data);
+	UTILITY : 100;
+}
+PLAN CONCLUDE RobotVelocity($robot, $velocity) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotVelocity"
+	BODY:
+		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
+		$data = "(RobotVelocity \"" + $robot + "\" " + $velocity+ ")";
+		PERFORM NotifyPermmittedContext($localAgent, $data);
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE OnRobotTaskStatus($robot, $status) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionOnRobotTaskStatus"
+	BODY:
+		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
+		$data = "(OnRobotTaskStatus \"" + $robot + "\" \"" + $status+ "\")";
+		PERFORM NotifyPermmittedContext($localAgent, $data);
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE OnAgentTaskStatus($agent, $task, $status) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionOnAgentTaskStatus"
+	BODY:
+		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
+		$data = "(OnAgentTaskStatus \"" + $agent + "\" \"" + $task + "\" \"" + $status+ "\")";
+		PERFORM NotifyPermmittedContext($localAgent, $data);
+	UTILITY : 100;
+}

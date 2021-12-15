@@ -1,0 +1,14 @@
+
+PLAN CONCLUDE PostWorkflowGoals() {
+	ID : "PostWorkflowGoals"
+	BODY :
+		System.out.println("==post start==");
+				
+		//POST ACHIEVE ThrowWorkflow("StoringCarrier", "PalletTransportation");
+		POST ACHIEVE ThrowWorkflow("UnstoringSmallCarrier", "MovingRackTransportation");
+		
+		
+		RETRACT PostWorkflowGoals();
+		System.out.println("==post complete==");
+	UTILITY : 1000;
+}
