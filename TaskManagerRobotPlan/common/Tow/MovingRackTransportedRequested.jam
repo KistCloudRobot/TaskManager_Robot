@@ -45,10 +45,10 @@ PLAN PERFORM MovingRackTransportedReportedTo($manager, $goalID, $goal){
 		PERFORM isro:UpdateAgentTaskStatus("MovingRackTransportedReportedTo", "start");
 		
 		RETRIEVE MovingRackTransportedRequestedFrom($m, $gID, $g);
-		System.out.println($m);
-		System.out.println($gID);
-		System.out.println($g);
-		System.out.println("Report Goal : " + $goal);
+		//System.out.println($m);
+		//System.out.println($gID);
+		//System.out.println($g);
+		//System.out.println("Report Goal : " + $goal);
 
 		$goal = $glUtility.escapeGL($goal);
 		$receiver = "agent://www.arbi.com/" + $manager + "/TaskManager";		
