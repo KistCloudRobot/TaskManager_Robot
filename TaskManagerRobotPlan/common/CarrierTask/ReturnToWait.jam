@@ -31,6 +31,6 @@ PLAN perform ReturnToWait(){
 
 		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "complete");
 		PERFORM  isro:endLog("PERFORM", "ReturnToWait");
-		$communicationInstance.inform($reasoner, "(goalComplete (ReturnToWait))");
+		//$communicationInstance.inform($reasoner, "(goalComplete (ReturnToWait))");
 	UTILITY: 10; 
 }
