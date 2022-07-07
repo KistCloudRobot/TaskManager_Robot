@@ -35,6 +35,7 @@ PLAN PERFORM boot() {
 		System.out.println("---Load Complete---");
 		
 		$helper.sleepAwhile(1000);
+		PERFORM ChannelInit();
 		
 		//PERFORM isro:STTRequest();
 		

@@ -7,6 +7,6 @@ PLAN PERFORM NotifyPermmittedContext($agent, $data){
 	PRECONDITION :
 		FACT Communication($communicationInstance);
 	BODY :
-		$communicationInstance.inform($agent, "(relationChanged " + $data + ")");
+		//$communicationInstance.inform($agent, "(relationChanged " + $data + ")");
 	UTILITY: 1; 
 }

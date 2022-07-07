@@ -13,6 +13,7 @@ import kr.ac.uos.ai.arbi.model.GLFactory;
 import kr.ac.uos.ai.arbi.model.GeneralizedList;
 import kr.ac.uos.ai.arbi.model.Value;
 import kr.ac.uos.ai.arbi.model.parser.ParseException;
+import kr.ac.uos.ai.mcarbi.agent.McArbiAgent;
 import taskManager.aplview.APLViewer;
 import taskManager.logger.TaskManagerLogger;
 import taskManager.utility.CommunicationUtility;
@@ -28,6 +29,7 @@ public class TaskManager_Robot extends ArbiAgent {
 	private GLMessageManager msgManager;
 	private BlockingQueue<RecievedMessage> messageQueue;
 	private TaskManagerLogger logger;
+	private McARBIAgentCommunicator mcARBIAgentCommunicator;
 	private boolean isTriggered = false;
 //	private APLViewer aplViewer;
 	
@@ -37,14 +39,15 @@ public class TaskManager_Robot extends ArbiAgent {
 	public int ENV_WAIT_VERTEX;
 	public int ENV_CHARGE_VERTEX;
 	public static final String ARBI_PREFIX = "www.arbi.com/";
-	public static final String BASE_AGENT_NAME = "/TaskManager";
+	public static final String TASKMANAGER_NAME = "www.arbi.com/TaskManager";
+	public static String MY_mcARBI_AGENT_ADDRESS;
 	public String RobotPlanPath;
 	
-	public static  String CONTEXTMANAGER_ADRESS = "";
-	public static  String KNOWLEDGEMANAGER_ADRESS = "";
-	public static  String BEHAVIOUR_INTERFACE_ADDRESS = "";
-	public static  String REASONER_ADRESS = "";
-	public static final String ACTION_ADRESS = "agent://www.arbi.com/Lift2/action";
+	public static  String CONTEXTMANAGER_ADDRESS = "agent://www.arbi.com/ContextManager";
+	public static  String KNOWLEDGEMANAGER_ADDRESS = "agent://www.arbi.com/KnowledgeManager";
+	public static  String BEHAVIOUR_INTERFACE_ADDRESS = "agent://www.arbi.com/BehaviorInterface";
+	public static  String REASONER_ADRESS = "agent://www.arbi.com/TaskReasoner";
+	public static final String ACTION_ADRESS = "agent://www.arbi.com/action";
 
 	public static final String AGENT_PREFIX = "agent://";
 	public static final String DATASOURCE_PREFIX = "ds://";
@@ -61,7 +64,7 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager = new GLMessageManager(interpreter);
 		
 		
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME, this,2);
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,2);
 		
 //		aplViewer = new APLViewer(interpreter);
 		//logger = new TaskManagerLogger(this,interpreter);
@@ -80,7 +83,7 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager = new GLMessageManager(interpreter);
 		
 		
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME, this,2);
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,2);
 		
 //		aplViewer = new APLViewer(interpreter);
 		//logger = new TaskManagerLogger(this,interpreter);
@@ -98,32 +101,32 @@ public class TaskManager_Robot extends ArbiAgent {
 		ENV_ROBOT_NAME = robotID;
 		
 		
-		if (ENV_ROBOT_NAME.equals("AMR_LIFT1")) {
+		if (ENV_ROBOT_NAME.equals("AMR_LIFT01")) {
 			ENV_AGENT_NAME = "Lift1";
-			ENV_WAIT_VERTEX = 201;
+			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_LIFT1";
+			ENV_WAIT_VERTEX = 143;
 			ENV_CHARGE_VERTEX = 101;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
-		} else if (ENV_ROBOT_NAME.equals("AMR_LIFT2")) {
+		} else if (ENV_ROBOT_NAME.equals("AMR_LIFT02")) {
 			ENV_AGENT_NAME = "Lift2";
-			ENV_WAIT_VERTEX = 202;
-			ENV_CHARGE_VERTEX = 102;
+			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_LIFT2";
+			ENV_WAIT_VERTEX = 157;
+			ENV_CHARGE_VERTEX = 500;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_TOW1")) {
 			ENV_AGENT_NAME = "Tow1";
+			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_TOW1";
 			ENV_WAIT_VERTEX = 203;
 			ENV_CHARGE_VERTEX = 103;
 			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_TOW2")) {
 			ENV_AGENT_NAME = "Tow2";
+			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_TOW2";
 			ENV_WAIT_VERTEX = 204;
 			ENV_CHARGE_VERTEX = 104;
 			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
 		}
 		ENV_JMS_BROKER = brokerURL +":"+ port;
-				
-		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
-		REASONER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/TaskReasoner"; 
-		BEHAVIOUR_INTERFACE_ADDRESS = AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/BehaviorInterface"; 
 		
 	}
 
@@ -134,19 +137,6 @@ public class TaskManager_Robot extends ArbiAgent {
 		//ENV_WAIT_VERTEX = Integer.parseInt(System.getenv("WAIT"));
 		//ENV_CHARGE_VERTEX = Integer.parseInt(System.getenv("CHARGE"));
 		
-		
-		
-		ENV_JMS_BROKER = "tcp://172.16.165.171" + ":61115";
-		//System.out.println(System.getenv());
-		ENV_AGENT_NAME = "Lift2";
-		ENV_ROBOT_NAME = "AMR_LIFT2";
-
-		ENV_WAIT_VERTEX = 202;
-		ENV_CHARGE_VERTEX = 102;
-		
-		CONTEXTMANAGER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/ContextManager"; 
-		REASONER_ADRESS =  AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/TaskReasoner"; 
-		BEHAVIOUR_INTERFACE_ADDRESS = AGENT_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + "/BehaviorInterface"; 
 	}
 	
 	public void test(){
@@ -166,22 +156,23 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager.assertFact("ExtraUtility", new JAMUtilityManager(interpreter));
 		msgManager.assertFact("TaskManager", this);
 		
-		msgManager.assertFact("isro:ReasonerAddress", REASONER_ADRESS);
-		msgManager.assertFact("isro:ContextManagerAddress", CONTEXTMANAGER_ADRESS);
-		msgManager.assertFact("isro:BehaviorAddress", BEHAVIOUR_INTERFACE_ADDRESS);
-
 		msgManager.assertFact("isro:robot", ENV_ROBOT_NAME);
-		msgManager.assertFact("isro:agent", ENV_AGENT_NAME);
+		msgManager.assertFact("isro:agent", MY_mcARBI_AGENT_ADDRESS);
 		
 		msgManager.assertFact("RobotPlanPath", RobotPlanPath);
 		msgManager.assertFact("WaitVertex", ENV_WAIT_VERTEX);
 		msgManager.assertFact("ChargeStation", ENV_CHARGE_VERTEX);
 		
 		msgManager.assertFact("OnAgentTaskStatus", ENV_AGENT_NAME, "wait", "wait");
-		msgManager.assertFact("RobotAt", ENV_ROBOT_NAME, 0, 0);
+		msgManager.assertFact("RobotAt", ENV_ROBOT_NAME, ENV_WAIT_VERTEX, ENV_WAIT_VERTEX);
 		msgManager.assertFact("RobotVelocity", ENV_ROBOT_NAME, 0);
 		msgManager.assertFact("BatteryRemain", ENV_ROBOT_NAME, 50);
 		msgManager.assertFact("OnRobotTaskStatus", ENV_ROBOT_NAME, "wait");
+		
+		mcARBIAgentCommunicator = new McARBIAgentCommunicator(messageQueue);
+		
+		McArbiAgent.execute(MY_mcARBI_AGENT_ADDRESS, mcARBIAgentCommunicator);
+		msgManager.assertFact("McARBIAgentCommunicator", mcARBIAgentCommunicator);
 		
 		//aplViewer.init();
 		
@@ -210,7 +201,7 @@ public class TaskManager_Robot extends ArbiAgent {
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
 
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + BASE_AGENT_NAME,2);
+		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + TASKMANAGER_NAME,2);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
@@ -271,9 +262,6 @@ public class TaskManager_Robot extends ArbiAgent {
 				} else if(gl.getName().equals("relationChanged")) {
 					String relationChanged = "(relationChanged " + gl.getExpression(0).toString() + ")";
 					msgManager.assertGL(relationChanged);
-				}  else if (gl.getName().equals("RobotPath")) {
-					msgManager.assertGL(gl.toString());
-					msgManager.assertGL("(RobotPathUpdated)");
 				} else if (gl.getName().equals("GoalReport")) {
 					msgManager.assertGL(gl.toString());
 				} else if (gl.getName().equals("GoalRequest")) {

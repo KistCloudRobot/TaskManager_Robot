@@ -13,7 +13,7 @@ PLAN CONCLUDE PalletTransportedRequestedFrom($manager, $goalID, $goal){
 		PERFORM isro:UpdateAgentTaskStatus("PalletTransportedRequestedFrom", "start");
 		
 		System.out.println("Requested Goal : " + $goal);
-		$manager = "Local";
+		
 		PERFORM isro:UpdateAgentTaskStatus("PalletTransportedRequestedFrom", "complete");
 		PERFORM isro:endLog("CONCLUDE", "PalletTransportedRequestedFrom");
 		$communicationInstance.inform($reasoner, "(goalComplete (PalletTransportedRequestedFrom \"" + $manager +"\" " + $goalID + " " + $goal + "))");

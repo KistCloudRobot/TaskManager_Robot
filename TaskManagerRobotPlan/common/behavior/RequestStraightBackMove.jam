@@ -1,7 +1,23 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-
+PLAN PERFORM isro:RequestStraightBackMove($vertex){
+	ID: "http://www.arbi.com//RequestStraightBackMove"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT isro:robot($robot);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestStraightBackMove");
+		
+		$result = $communicationInstance.request($address, "(ControlRobotMoveBackwardToNode \"" + $robot + "\" \"" + $vertex+ "\")");
+		
+		System.out.println("action result : " + $result);
+		
+		PERFORM isro:endLog("PERFORM", "isro:RequestStraightBackMove");
+	UTILITY: 10; 
+}
+/*
 PLAN PERFORM isro:RequestStraightBackMove($robotID, $vertex){
 	ID: "http://www.arbi.com//RequestStraightBackMove"
 	PRECONDITION:
@@ -29,3 +45,4 @@ PLAN PERFORM isro:RequestStraightBackMove($robotID, $vertex){
 		PERFORM isro:endLog("PERFORM", "isro:RequestStraightBackMove");
 	UTILITY: 10; 
 }
+*/

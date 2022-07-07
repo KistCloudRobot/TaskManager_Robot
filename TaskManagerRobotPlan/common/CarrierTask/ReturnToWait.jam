@@ -15,22 +15,29 @@ PLAN perform ReturnToWait(){
 	ID: "http://www.arbi.com//BuiltInPlan#ReturnToWait"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($address);
 		FACT GLUtility($glUtility);
-		FACT RobotAt($robot, $vertex1, $vertex2);
-		FACT isro:ReasonerAddress($reasoner);
+		FACT RobotAt($robot, $v1, $v2);
 		
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "ReturnToWait");
 		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "start");
 		
 		RETRIEVE WaitVertex($waitVertex);
-		RETRIEVE ChargeStation($charge);
-
-		PERFORM  isro:RequestNavigate($robot,$vertex1,$waitVertex);
+		System.out.println("wait vertex : " + $waitVertex);
+		
+		System.out.println("robot : " + $robot);
+		
+		System.out.println("robot vertex : " + $v1);
+		
+		//RETRIEVE ChargeStation($charge);
+		
+		PERFORM  isro:RequestPath($robot, $v1, $waitVertex, $path);
+		
+		PERFORM  isro:MoveFollowThePath($path);
+		
+		PERFORM UpdateRobotAt($waitVertex);
 
 		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "complete");
 		PERFORM  isro:endLog("PERFORM", "ReturnToWait");
-		//$communicationInstance.inform($reasoner, "(goalComplete (ReturnToWait))");
 	UTILITY: 10; 
 }

@@ -1,0 +1,30 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM isro:RequestPath($robotID,$start,$end, $path){
+	ID: "http://www.arbi.com//RequestPath"
+	PRECONDITION:
+		FACT isro:ManagerAddress($address);
+		FACT isro:agent($agent);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestPath");
+		
+		$data = "(RobotPathRequest \"" +$agent + "\" " +$start + " " + $end+ ")";
+		System.out.println("data : " + $data);
+		PERFORM request("logistic", $address, $data, $result);			
+		System.out.println("request result : " + $result);
+		System.out.println("wait RobotPath");
+		
+		WAIT RobotPath($a, $b, $c, $path);
+		
+		RETRIEVE RobotPath($a, $b, $c, $path);
+		
+		System.out.println("RobotPath : " + $path);
+				
+		RETRACT RobotPath($a, $b, $c, $path);
+		
+		PERFORM isro:endLog("PERFORM", "isro:RequestPath");
+	UTILITY: 10; 
+}

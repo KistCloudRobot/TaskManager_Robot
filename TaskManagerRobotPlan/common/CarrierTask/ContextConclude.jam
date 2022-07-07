@@ -1,7 +1,7 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-
+/*
 PLAN CONCLUDE RobotAt($robot, $vertex1, $vertex2) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotAt"
 	PRECONDITION :
@@ -50,3 +50,4 @@ PLAN CONCLUDE OnAgentTaskStatus($agent, $task, $status) {
 		PERFORM NotifyPermmittedContext($localAgent, $data);
 	UTILITY : 100;
 }
+*/

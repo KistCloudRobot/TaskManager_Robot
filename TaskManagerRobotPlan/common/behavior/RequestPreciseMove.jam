@@ -3,6 +3,31 @@ PREFIXES:
 
 
 PLAN PERFORM isro:RequestPreciseMove($robotID, $vertex){
+	ID: "http://www.arbi.com//RequestPreciseMoveForKyonggiDemo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:NavigationControllerAddress($address);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:agent($agent);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestPreciseMove");
+		
+		$actionID = $helper.getActionID($agent);
+			
+		$result = $communicationInstance.request($address, "(ControlRobotMove \"" + $robotID + "\" " + $vertex+ " \"GuideMoveToNode\" 1)");
+		
+		System.out.println("action result : " + $result);
+		
+		
+		PERFORM isro:endLog("PERFORM", "isro:RequestPreciseMove");
+	UTILITY: 10; 
+}
+/*
+PLAN PERFORM isro:RequestPreciseMove($robotID, $vertex){
 	ID: "http://www.arbi.com//RequestPreciseMove"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -29,3 +54,4 @@ PLAN PERFORM isro:RequestPreciseMove($robotID, $vertex){
 		PERFORM isro:endLog("PERFORM", "isro:RequestPreciseMove");
 	UTILITY: 10; 
 }
+*/

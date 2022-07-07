@@ -1,0 +1,28 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+
+PLAN PERFORM isro:MoveFollowThePath($path){
+	ID: "http://www.arbi.com//MoveFollowThePath"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:agent($agent);
+		FACT isro:robot($robot);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:MoveFollowThePath");
+		$pathLength = $glUtility.retireveExpressionSize($path);
+		
+		for($i = 0; $i<$pathLength; $i = $i + 1) {
+			
+			$destination = $glUtility.retrieveGLExpression($path, $i);
+			PERFORM isro:RequestMove($destination);
+		}
+		
+		PERFORM isro:endLog("PERFORM", "isro:MoveFollowThePath");
+	UTILITY: 10; 
+}

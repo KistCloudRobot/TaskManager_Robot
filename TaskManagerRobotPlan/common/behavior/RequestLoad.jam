@@ -1,6 +1,29 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
+
+PLAN PERFORM isro:RequestLoad($vertex){
+	ID: "http://www.arbi.com//isro:RequestLoadForKyonggiDemo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:robot($robot);
+		FACT isro:agent($agent);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestLoad");
+		
+		$actionID = $helper.getActionID($agent);
+		$result = $communicationInstance.request($address, "(ControlRobotLift \""+ $robot +"\" \"LiftUp\" 0.02)");
+				
+		System.out.println("action result : " + $result);
+			
+		PERFORM isro:endLog("PERFORM", "isro:RequestLoad");
+	UTILITY: 1; 
+}
+/*
 PLAN PERFORM isro:RequestLoad($vertex){
 	ID: "http://www.arbi.com//isro:RequestLoad"
 	PRECONDITION:
@@ -8,7 +31,7 @@ PLAN PERFORM isro:RequestLoad($vertex){
 		FACT isro:BehaviorAddress($address);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
-
+		FACT isro:robot($robot);
 		FACT isro:agent($agent);
 		
 	BODY:
@@ -25,3 +48,4 @@ PLAN PERFORM isro:RequestLoad($vertex){
 		PERFORM isro:endLog("PERFORM", "isro:RequestLoad");
 	UTILITY: 1; 
 }
+*/

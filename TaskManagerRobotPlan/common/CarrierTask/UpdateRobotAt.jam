@@ -1,0 +1,13 @@
+PLAN perform UpdateRobotAt($vertex){
+	ID: "http://www.arbi.com//BuiltInPlan#UpdateRobotAt"
+	PRECONDITION:
+		FACT RobotAt($robot, $v1, $v2);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "UpdateRobotAt");
+		
+		RETRACT RobotAt($robot, $v1, $v2);
+		ASSERT RobotAt($robot, $vertex, $vertex);
+		PERFORM isro:endLog("PERFORM", "UpdateRobotAt");
+		
+	UTILITY : 11;
+}

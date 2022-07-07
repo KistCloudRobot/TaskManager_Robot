@@ -16,7 +16,6 @@ PLAN perform MoveToLocation($location){
 	ID: "http://www.arbi.com//BuiltInPlan#MoveToLocation"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($address);
 		FACT GLUtility($glUtility);
 		FACT RobotAt($robot, $vertex1, $vertex2);
 		FACT isro:ReasonerAddress($reasoner);
@@ -27,10 +26,15 @@ PLAN perform MoveToLocation($location){
 		
 		PERFORM isro:QueryPreparationVertex($location, $preparationVertex);
 
-		PERFORM  isro:RequestNavigate($robot,$vertex1,$preparationVertex);
+		PERFORM  isro:RequestPath($robot, $vertex1, $preparationVertex, $path);
+		
+		PERFORM  isro:MoveFollowThePath($path);
+		
+		PERFORM UpdateRobotAt($preparationVertex);
 		
 		PERFORM  isro:UpdateAgentTaskStatus("MoveToLocation", "complete");
 		PERFORM  isro:endLog("PERFORM", "MoveToLocation");
+		
 		$communicationInstance.inform($reasoner, "(goalComplete (MoveToLocation \"" + $location +"\"))");
 	UTILITY: 10; 
 }
@@ -50,10 +54,10 @@ PLAN perform MoveToLocation($location){
 		PERFORM  isro:argumentLog("robot", $robot);
 		PERFORM  isro:argumentLog("location", $location);
 		
-		PERFORM  isro:QueryPreparationVertex($location);
-		PERFORM  isro:RequestRobotPath($vertex2, $preparationVertex, $path);
+		PERFORM  isro:QueryPreparationVertex($location, $preparationVertex);
+		PERFORM  isro:RequestRobotPath($vertex1, $preparationVertex, $path);
 		
-		RETRACT  PrepartionVertex($location, $preparationVertex);
+		
 		PERFORM  isro:RequestMove($path);
 		
 		PERFORM  isro:UpdateAgentTaskStatus("MoveToLocation", "complete");
@@ -62,8 +66,6 @@ PLAN perform MoveToLocation($location){
 		$communicationInstance.inform($reasoner, "(goalComplete (MoveToLocation \"" + $location +"\"))");
 	UTILITY: 1; 
 }
-*/
-
 PLAN perform MoveToLocation($location){
 	ID: "http://www.arbi.com//BuiltInPlan#MoveToLocationStopCharge"
 	PRECONDITION:
@@ -80,10 +82,12 @@ PLAN perform MoveToLocation($location){
 		PERFORM  isro:argumentLog("location", $location);
 				
 		PERFORM StopCharge($chargeStation);
-		PERFORM isro:QueryPreparationVertex($location, $preparationVertex);
 		
-		PERFORM RequestRobotPath($vertex2, $preparationVertex, $path);
-		PERFORM isro:RequestMove($path);
+		PERFORM isro:QueryPreparationVertex($location, $preparationVertex);
+
+		PERFORM  isro:RequestPath($robot,$vertex1, $preparationVertex, $path);
+		
+		PERFORM  isro:MoveFollowThePath($path);
 		
 		PERFORM UpdateAgentTaskStatus("MoveToLocation", "complete");
 		PERFORM isro:endLog("PERFORM", "MoveToLocation");
@@ -92,3 +96,4 @@ PLAN perform MoveToLocation($location){
 	UTILITY : 11;
 }
 
+*/

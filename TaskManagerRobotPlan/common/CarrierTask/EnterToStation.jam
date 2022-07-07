@@ -18,6 +18,7 @@ PLAN PERFORM isro:EnterToStation($location){
 		System.out.println("moveType : " + $moveType);
 		System.out.println("argument : " + $result);
 		PERFORM isro:StationMove($moveType, $result);
+		
 		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
 		
 	UTILITY: 10; 

@@ -12,6 +12,45 @@ PLAN CONCLUDE PostObjectGrabbed($object, $location) {
 	UTILITY : 10000;
 }
 
+
+PLAN PERFORM ObjectGrabbed($object, $location){
+	ID: "http://www.arbi.com//BuiltInPlan#ObjectGrabbedForKyonggiDemo"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT RobotAt($robot, $vertex1, $vertex2);
+		FACT isro:ReasonerAddress($reasoner);
+		FACT ExtraUtility($util);
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed");
+		PERFORM  isro:UpdateAgentTaskStatus("ObjectGrabbed", "start");
+		
+		PERFORM isro:QueryStationVertex($location, $stationVertex);
+		PERFORM isro:RequestMove($stationVertex);
+		
+		PERFORM UpdateRobotAt($stationVertex);
+		
+		PERFORM isro:RequestLoad($stationVertex);
+		
+		PERFORM isro:QueryPreparationVertex($location, $preparationVertex);
+		
+		PERFORM isro:RequestStraightBackMove($preparationVertex);
+
+		PERFORM isro:QueryPreparationVertex($preparationVertex, $backVertex);
+		PERFORM isro:RequestStraightBackMove($backVertex);
+		
+		PERFORM UpdateRobotAt($backVertex);
+		
+		PERFORM  isro:UpdateAgentTaskStatus("ObjectGrabbed", "complete");
+		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
+		
+		$communicationInstance.inform($reasoner, "(goalComplete (ObjectGrabbed \"" + $object +"\" \"" + $location + "\"))");
+	UTILITY: 10; 
+
+}
+/*
+
 PLAN PERFORM ObjectGrabbed($object, $location){
 	ID: "http://www.arbi.com//BuiltInPlan#ObjectGrabbed"
 	PRECONDITION:
@@ -24,13 +63,18 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "ObjectGrabbed");
 		PERFORM  isro:UpdateAgentTaskStatus("ObjectGrabbed", "start");
-		
+		$preparationVertex = $vertex1;
 		PERFORM isro:EnterToStation($location);
 		
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
+		
+		PERFORM UpdateRobotAt($stationVertex);
+		
 		PERFORM isro:RequestLoad($stationVertex);
 		
 		PERFORM isro:ExitFromStation($location);
+		
+		PERFORM UpdateRobotAt($preparationVertex);
 		
 		PERFORM  isro:UpdateAgentTaskStatus("ObjectGrabbed", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
@@ -39,3 +83,4 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 	UTILITY: 10; 
 
 }
+*/
