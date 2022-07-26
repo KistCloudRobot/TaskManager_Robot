@@ -18,7 +18,7 @@ PLAN PERFORM isro:RequestCharge($vertex){
 		
 		$actionID = $helper.getActionID($agent);
 			
-		$communicationInstance.request($address, "(charge (actionID \"" + $actionID + "\") " + $vertex + ")");
+		$communicationInstance.request($address, "(Charge (actionID \"" + $actionID + "\") " + $vertex + ")");
 				
 		System.out.println("wait id" + $actionID);
 		WAIT actionCompleted($actionID);

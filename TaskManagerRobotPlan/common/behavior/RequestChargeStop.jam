@@ -18,7 +18,7 @@ PLAN PERFORM isro:RequestChargeStop($vertex){
 		
 		$actionID = $helper.getActionID($agent);
 			
-		$communicationInstance.request($address, "(chargeStop (actionID \"" + $actionID + "\") " + $vertex + ")");
+		$communicationInstance.request($address, "(ChargeStop (actionID \"" + $actionID + "\") " + $vertex + ")");
 				
 		System.out.println("wait id" + $actionID);
 		WAIT actionCompleted($actionID);

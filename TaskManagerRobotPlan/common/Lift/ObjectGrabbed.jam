@@ -37,10 +37,10 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		
 		PERFORM isro:RequestStraightBackMove($preparationVertex);
 
-		PERFORM isro:QueryPreparationVertex($preparationVertex, $backVertex);
-		PERFORM isro:RequestStraightBackMove($backVertex);
+		//PERFORM isro:QueryPreparationVertex($preparationVertex, $backVertex);
+		//PERFORM isro:RequestStraightBackMove($backVertex);
 		
-		PERFORM UpdateRobotAt($backVertex);
+		PERFORM UpdateRobotAt($preparationVertex);
 		
 		PERFORM  isro:UpdateAgentTaskStatus("ObjectGrabbed", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");

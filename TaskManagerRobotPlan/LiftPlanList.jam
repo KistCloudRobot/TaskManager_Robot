@@ -10,5 +10,5 @@ Plan PERFORM loadPlanPackage(){
 		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/builtIn");
 		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/facts");
 		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/CarrierTask");
-		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/LIFT");
+		$helper.loadPlanPackage("./TaskManagerRobotPlan/common/Lift");
 }

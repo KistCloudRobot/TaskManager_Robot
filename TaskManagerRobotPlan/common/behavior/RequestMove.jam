@@ -42,7 +42,7 @@ PLAN PERFORM isro:RequestMove($path){
 		
 		$actionID = $helper.getActionID($agent);
 			
-		$communicationInstance.request($address, "(move (actionID \"" + $actionID + "\") \"" + $robot + "\" " + $path + ")");
+		$communicationInstance.request($address, "(Move (actionID \"" + $actionID + "\") \"" + $robot + "\" " + $path + ")");
 				
 		System.out.println("wait id " + $actionID);
 		WAIT actionCompleted($actionID);

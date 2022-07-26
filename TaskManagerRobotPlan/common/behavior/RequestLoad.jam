@@ -16,7 +16,7 @@ PLAN PERFORM isro:RequestLoad($vertex){
 		PERFORM isro:startLog("PERFORM", "isro:RequestLoad");
 		
 		$actionID = $helper.getActionID($agent);
-		$result = $communicationInstance.request($address, "(ControlRobotLift \""+ $robot +"\" \"LiftUp\" 0.02)");
+		$result = $communicationInstance.request($address, "(ControlRobotLift \""+ $robot +"\" \"LiftUp\" 0.002)");
 				
 		System.out.println("action result : " + $result);
 			
@@ -39,7 +39,7 @@ PLAN PERFORM isro:RequestLoad($vertex){
 		
 		$actionID = $helper.getActionID($agent);
 		$helper.sleepAwhile(1000);
-		$communicationInstance.request($address, "(load (actionID \"" + $actionID + "\") " + $vertex + ")");
+		$communicationInstance.request($address, "(Load (actionID \"" + $actionID + "\") " + $vertex + ")");
 				
 		System.out.println("wait id" + $actionID);
 		WAIT actionCompleted($actionID);
