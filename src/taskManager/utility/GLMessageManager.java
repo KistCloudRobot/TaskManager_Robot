@@ -154,7 +154,7 @@ public class GLMessageManager {
 			e.printStackTrace();
 		}
 		
-		
+		System.out.println("retrieved GL : " + glString);
 		return result;
 	}
 	
@@ -386,7 +386,6 @@ public class GLMessageManager {
 			GeneralizedList gl = GLFactory.newGLFromGLString(input);
 			result = gl.getName();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -517,9 +516,9 @@ public class GLMessageManager {
 		}
 	}
 	public String escapeGL(String gl) {
-		System.out.println("start escape : " + gl);
+		//System.out.println("start escape : " + gl);
 		String result = GLFactory.escape(gl);
-		System.out.println(result);
+		//System.out.println(result);
 		return result;
 	}
 	public String unescapeGL(String gl) {

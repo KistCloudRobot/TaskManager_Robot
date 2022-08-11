@@ -119,12 +119,6 @@ public class CommunicationUtility {
 	}
 	
 	public void updateToLTM(String content) {
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		ds.updateFact(content);
 	}
 	

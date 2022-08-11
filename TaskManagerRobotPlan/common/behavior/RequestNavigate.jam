@@ -2,29 +2,28 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN PERFORM isro:RequestNavigate($robotID,$start,$end){
+PLAN PERFORM isro:RequestNavigate($start,$end){
 	ID: "http://www.arbi.com//RequestNavigate"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:NavigationControllerAddress($address);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		//FACT OnRobotTaskStatus($robot, $status);
 		//$status == "Ready";
 		FACT isro:agent($agent);
+		FACT isro:robot($robotID);
+		FACT isro:ManagerAddress($address);
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "isro:RequestNavigate");
 		
 		$actionID = $helper.getActionID($agent);
-			
-		$communicationInstance.request($address, "(Move (actionID \"" + $actionID + "\") \"" + $robotID + "\" " + $start +" " + $end + ")");
-		
-		System.out.println("wait id" + $actionID);
-		
-		WAIT actionCompleted($actionID);
-		RETRACT actionCompleted($actionID);
-			
+		$data = "(RequestNavigate \"" + $actionID + "\" \"" + $robotID + "\" " + $start +" " + $end + ")";
+		PERFORM request("logistic", $address, $data, $result);
+
+		System.out.println("wait id : " + $actionID);
+		PERFORM WaitActionResult($actionID);
+
 		
 		PERFORM isro:endLog("PERFORM", "isro:RequestNavigate");
 	UTILITY: 10; 

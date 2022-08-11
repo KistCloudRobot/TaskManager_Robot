@@ -11,11 +11,12 @@ plan perform inform($address, $data){
 plan perform inform($channelName, $address, $data){
 	ID : "InformByChannel"
 	precondition:
-		fact McARBIAgentCommunicator($communication);
-		fact Channel($channelName, $channel);
 	body:
-		System.out.println("mcARBI send: " + $address+ " // " + $data);
+		RETRIEVE Channel($channelName, $channel);
+		//System.out.println("mcARBI send: " + $address+ " // " + $data);
 		$channel.send($address,$data);
+		
+	UTILITY : 10000;
 }
 
 plan perform inform($channelName, $address, $data){

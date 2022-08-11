@@ -45,9 +45,6 @@ PLAN PERFORM PalletTransportedReportedTo($manager, $goalID, $goal){
 		PERFORM isro:UpdateAgentTaskStatus("PalletTransportedReportedTo", "start");
 		
 		RETRIEVE PalletTransportedRequestedFrom($m, $gID, $g);
-		//System.out.println($m);
-		//System.out.println($gID);
-		//System.out.println($g);
 		System.out.println("Report Goal : " + $goal);
 
 		$goal = $glUtility.escapeGL($goal);
@@ -59,6 +56,6 @@ PLAN PERFORM PalletTransportedReportedTo($manager, $goalID, $goal){
 		PERFORM isro:UpdateAgentTaskStatus("PalletTransportedReportedTo", "complete");
 		PERFORM isro:endLog("PERFORM", "PalletTransportedReportedTo");
 		$communicationInstance.inform($reasoner, "(goalComplete (PalletTransportedReportedTo \"Local\" \"" + $goalID + "\" \"" + $goal + "\"))");
-		perform ReturnToWait();
+		POST perform ReturnToWait();
 	UTILITY: 100; 
 }

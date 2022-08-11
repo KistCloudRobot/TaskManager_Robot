@@ -8,9 +8,9 @@ FACTS:
 	FACT  isro:BehaviorAddress("agent://www.arbi.com/BehaviorInterface");
 	FACT  isro:ReasonerAddress("agent://www.arbi.com/TaskReasoner");
 	FACT  isro:ContextManagerAddress("agent://www.arbi.com/ContextManager");
-	FACT  isro:MapManagerAddress("agent://www.mcarbi.com/MapManager");
 	FACT  isro:ManagerAddress("agent://www.mcarbi.com/Local");
-	
+	FACT  isro:ServicePackageDispatcherAddress("agent://www.arbi.com/ServiceDispatcher");
+	FACT  isro:SemanticMapManagerAddress("agent://www.mcarbi.com/SemanticMapManager");
 	/*
 	FACT  isro:BehaviorAddress("agent://www.arbi.com/Lift2/BehaviorInterface");
 	FACT  isro:ReasonerAddress("agent://www.arbi.com/Lift2/TaskReasoner");

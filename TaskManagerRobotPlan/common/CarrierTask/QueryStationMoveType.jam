@@ -14,9 +14,7 @@ PLAN perform isro:QueryStationMoveType($location, $direction, $result) {
 		
 		$queryResult = $communicationInstance.sendQuery($address, "(StationMoveType \"" + $location +"\" \""+ $direction + "\" $result)");
 		
-		
 		$result = $glUtility.retrieveGLExpression($queryResult, 2);
-			
 		PERFORM  isro:endLog("PERFORM", "isro:QueryStationMoveType");
 	
 	UTILITY: 10; 

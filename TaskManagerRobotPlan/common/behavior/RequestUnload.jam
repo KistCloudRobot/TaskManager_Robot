@@ -3,31 +3,6 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 PLAN PERFORM isro:RequestUnload($vertex){
-	ID: "http://www.arbi.com//isro:RequestUnloadForKyonggiDemo"
-	PRECONDITION:
-		FACT Communication($communicationInstance);
-		FACT isro:BehaviorAddress($address);
-		FACT GLUtility($glUtility);
-		FACT ExtraUtility($helper);
-		FACT isro:robot($robot);
-		FACT isro:agent($agent);
-		
-	BODY:
-		PERFORM isro:startLog("PERFORM", "isro:RequestUnload");
-		
-		$actionID = $helper.getActionID($agent);
-			
-		$result = $communicationInstance.request($address, "(ControlRobotLift \"" + $robot + "\" \"PutDown\" 0.002)");
-				
-		System.out.println("action result : " + $result);
-			
-		PERFORM isro:endLog("PERFORM", "isro:RequestUnload");
-	UTILITY: 1; 
-}
-
-
-/*
-PLAN PERFORM isro:RequestUnload($vertex){
 	ID: "http://www.arbi.com//isro:RequestUnload"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
@@ -41,15 +16,13 @@ PLAN PERFORM isro:RequestUnload($vertex){
 		PERFORM isro:startLog("PERFORM", "isro:RequestUnload");
 		
 		$actionID = $helper.getActionID($agent);
-		$helper.sleepAwhile(1000);
 			
-		$communicationInstance.request($address, "(Unload (actionID \"" + $actionID + "\") " + $vertex + ")");
+		$communicationInstance.request($address, "(Unload \"" + $actionID + "\" " + $vertex + ")");
 				
-		System.out.println("wait id" + $actionID);
-		WAIT actionCompleted($actionID);
-		RETRACT actionCompleted($actionID);
+		System.out.println("wait id : " + $actionID);
+		
+		PERFORM WaitActionResult($actionID);
 			
 		PERFORM isro:endLog("PERFORM", "isro:RequestUnload");
 	UTILITY: 1; 
 }
-*/

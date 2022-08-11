@@ -1,6 +1,28 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
+PLAN CONCLUDE RobotPosition($robot, $x, $y) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotPosition"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (RobotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
+		PERFORM inform("logistic", $address, $data);
+		
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE RobotLoading($robot, $load) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotLoading"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+
+		$data = "(context (RobotLoading \"" + $robot + "\" \"" + $load + "\"))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+
 /*
 PLAN CONCLUDE RobotAt($robot, $vertex1, $vertex2) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotAt"

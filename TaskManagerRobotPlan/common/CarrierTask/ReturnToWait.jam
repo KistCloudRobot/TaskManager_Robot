@@ -16,26 +16,16 @@ PLAN perform ReturnToWait(){
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
-		FACT RobotAt($robot, $v1, $v2);
-		
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "ReturnToWait");
 		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "start");
 		
+		RETRIEVE RobotAt($robot, $v1, $v2);
 		RETRIEVE WaitVertex($waitVertex);
-		System.out.println("wait vertex : " + $waitVertex);
-		
-		System.out.println("robot : " + $robot);
-		
-		System.out.println("robot vertex : " + $v1);
 		
 		//RETRIEVE ChargeStation($charge);
 		
-		PERFORM  isro:RequestPath($robot, $v1, $waitVertex, $path);
-		
-		PERFORM  isro:MoveFollowThePath($path);
-		
-		PERFORM UpdateRobotAt($waitVertex);
+		PERFORM  isro:RequestNavigate($v1,$waitVertex);
 
 		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "complete");
 		PERFORM  isro:endLog("PERFORM", "ReturnToWait");

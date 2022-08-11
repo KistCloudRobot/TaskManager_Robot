@@ -4,10 +4,7 @@ PREFIXES:
 	
 FACTS:	
 	
-	
 	/*
-	fact isro:robot("AMR_LIFT2");
-	fact isro:agent("Lift2");
 	fact OnAgentTaskStatus("Lift2", "wait", "wait");
 	fact RobotAt("AMR_LIFT2", 102,102);
 	fact RobotVelocity("AMR_LIFT2", 0);

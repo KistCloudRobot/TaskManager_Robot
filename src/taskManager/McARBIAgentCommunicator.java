@@ -2,13 +2,13 @@ package taskManager;
 
 import java.util.concurrent.BlockingQueue;
 
-import kr.ac.uos.ai.mcarbi.agent.ChannelFactory;
-import kr.ac.uos.ai.mcarbi.agent.McArbiAgent;
-import kr.ac.uos.ai.mcarbi.agent.communication.Channel;
-import kr.ac.uos.ai.mcarbi.server.ChannelType;
+import kr.ac.uos.ai.agentCommunicationFramework.agent.ChannelFactory;
+import kr.ac.uos.ai.agentCommunicationFramework.agent.Agent;
+import kr.ac.uos.ai.agentCommunicationFramework.agent.communication.Channel;
+import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import taskManager.utility.RecievedMessage;
 
-public class McARBIAgentCommunicator extends McArbiAgent{
+public class McARBIAgentCommunicator extends Agent{
 	
 
 	private BlockingQueue<RecievedMessage> messageQueue;
@@ -22,7 +22,6 @@ public class McARBIAgentCommunicator extends McArbiAgent{
 		messageQueue = queue;
 		
 		System.out.println("mcARBI Agent start..");
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -81,14 +80,14 @@ public class McARBIAgentCommunicator extends McArbiAgent{
 
 	@Override
 	public void onData(String sender, String data) {
-		System.out.println("recieved data from " + sender + " : " + data);
+		//System.out.println("recieved data from " + sender + " : " + data);
 		RecievedMessage msg = new RecievedMessage(sender, data);
 		messageQueue.add(msg);
 	}
 
 	@Override
 	public synchronized String onRequest(String sender, String request) {
-		System.out.println("received data from " + sender + " : " + request);
+		//System.out.println("received data from " + sender + " : " + request);
 		RecievedMessage msg = new RecievedMessage(sender, request);
 		messageQueue.add(msg);
 

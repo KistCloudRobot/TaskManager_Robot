@@ -6,6 +6,9 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import kr.ac.uos.ai.agentCommunicationFramework.agent.AgentExecutor;
+import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
 import kr.ac.uos.ai.arbi.ltm.DataSource;
@@ -13,7 +16,6 @@ import kr.ac.uos.ai.arbi.model.GLFactory;
 import kr.ac.uos.ai.arbi.model.GeneralizedList;
 import kr.ac.uos.ai.arbi.model.Value;
 import kr.ac.uos.ai.arbi.model.parser.ParseException;
-import kr.ac.uos.ai.mcarbi.agent.McArbiAgent;
 import taskManager.aplview.APLViewer;
 import taskManager.logger.TaskManagerLogger;
 import taskManager.utility.CommunicationUtility;
@@ -34,13 +36,12 @@ public class TaskManager_Robot extends ArbiAgent {
 //	private APLViewer aplViewer;
 	
 	public static String ENV_JMS_BROKER;
-	public static String ENV_AGENT_NAME;
 	public static String ENV_ROBOT_NAME;
 	public int ENV_WAIT_VERTEX;
 	public int ENV_CHARGE_VERTEX;
 	public static final String ARBI_PREFIX = "www.arbi.com/";
 	public static final String TASKMANAGER_NAME = "www.arbi.com/TaskManager";
-	public static String MY_mcARBI_AGENT_ADDRESS;
+	public static String MY_mcARBI_AGENT_ID;
 	public String RobotPlanPath;
 	
 	public static  String CONTEXTMANAGER_ADDRESS = "agent://www.arbi.com/ContextManager";
@@ -72,11 +73,11 @@ public class TaskManager_Robot extends ArbiAgent {
 	}
 	
 	
-	public TaskManager_Robot(String robotID, String ip, int port) {
+	public TaskManager_Robot(String robotID, String ip) {
 		
 		System.out.println("start");
 		System.out.println("robotID : " + robotID);
-		initAddress(robotID,ip,port);
+		initAddress(robotID,ip);
 		interpreter = JAM.parse(new String[] { "./TaskManagerRobotPlan/boot.jam" });
 		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
 		
@@ -90,43 +91,39 @@ public class TaskManager_Robot extends ArbiAgent {
 		init();
 	}
 	
-	public void initAddress(String robotID, String ip, int port) {
+	public void initAddress(String robotID, String ip) {
 
 		String brokerURL = "";
 		if(ip.equals("env")) {
 			brokerURL = "tcp://" + System.getenv("JMS_BROKER");
 		} else {
-			brokerURL = "tcp://" + ip;
+			brokerURL = ip;
 		}
 		ENV_ROBOT_NAME = robotID;
 		
 		
-		if (ENV_ROBOT_NAME.equals("AMR_LIFT01")) {
-			ENV_AGENT_NAME = "Lift1";
-			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_LIFT1";
+		if (ENV_ROBOT_NAME.equals("AMR_LIFT1")) {
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT1";
 			ENV_WAIT_VERTEX = 143;
 			ENV_CHARGE_VERTEX = 101;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
-		} else if (ENV_ROBOT_NAME.equals("AMR_LIFT02")) {
-			ENV_AGENT_NAME = "Lift2";
-			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_LIFT2";
-			ENV_WAIT_VERTEX = 157;
+		} else if (ENV_ROBOT_NAME.equals("AMR_LIFT2")) {
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT2";
+			ENV_WAIT_VERTEX = 156;
 			ENV_CHARGE_VERTEX = 500;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_TOW1")) {
-			ENV_AGENT_NAME = "Tow1";
-			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_TOW1";
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_TOW1";
 			ENV_WAIT_VERTEX = 203;
 			ENV_CHARGE_VERTEX = 103;
 			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_TOW2")) {
-			ENV_AGENT_NAME = "Tow2";
-			MY_mcARBI_AGENT_ADDRESS = "agent://www.mcarbi.com/AMR_TOW2";
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_TOW2";
 			ENV_WAIT_VERTEX = 204;
 			ENV_CHARGE_VERTEX = 104;
 			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
 		}
-		ENV_JMS_BROKER = brokerURL +":"+ port;
+		ENV_JMS_BROKER = brokerURL;
 		
 	}
 
@@ -157,21 +154,25 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager.assertFact("TaskManager", this);
 		
 		msgManager.assertFact("isro:robot", ENV_ROBOT_NAME);
-		msgManager.assertFact("isro:agent", MY_mcARBI_AGENT_ADDRESS);
+		msgManager.assertFact("isro:agent", MY_mcARBI_AGENT_ID);
 		
 		msgManager.assertFact("RobotPlanPath", RobotPlanPath);
 		msgManager.assertFact("WaitVertex", ENV_WAIT_VERTEX);
 		msgManager.assertFact("ChargeStation", ENV_CHARGE_VERTEX);
 		
-		msgManager.assertFact("OnAgentTaskStatus", ENV_AGENT_NAME, "wait", "wait");
+		msgManager.assertFact("OnAgentTaskStatus", MY_mcARBI_AGENT_ID, "wait", "wait");
+
+		msgManager.assertFact("RobotPosition", ENV_ROBOT_NAME, 0, 0);
 		msgManager.assertFact("RobotAt", ENV_ROBOT_NAME, ENV_WAIT_VERTEX, ENV_WAIT_VERTEX);
+
+		msgManager.assertFact("RobotLoading", ENV_ROBOT_NAME, "Unloading");
 		msgManager.assertFact("RobotVelocity", ENV_ROBOT_NAME, 0);
 		msgManager.assertFact("BatteryRemain", ENV_ROBOT_NAME, 50);
 		msgManager.assertFact("OnRobotTaskStatus", ENV_ROBOT_NAME, "wait");
 		
 		mcARBIAgentCommunicator = new McARBIAgentCommunicator(messageQueue);
 		
-		McArbiAgent.execute(MY_mcARBI_AGENT_ADDRESS, mcARBIAgentCommunicator);
+		AgentExecutor.execute(MY_mcARBI_AGENT_ID, mcARBIAgentCommunicator, ChannelType.ZeroMQ);
 		msgManager.assertFact("McARBIAgentCommunicator", mcARBIAgentCommunicator);
 		
 		//aplViewer.init();
@@ -201,7 +202,7 @@ public class TaskManager_Robot extends ArbiAgent {
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
 
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + ARBI_PREFIX + ENV_AGENT_NAME + TASKMANAGER_NAME,2);
+		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + TASKMANAGER_NAME,2);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
@@ -218,9 +219,12 @@ public class TaskManager_Robot extends ArbiAgent {
 		String subscribeStatement = "(rule (fact (context $context)) --> (notify (context $context)))";
 		System.out.println("??");
 		System.out.println(dc.subscribe(subscribeStatement));
-		
+		subscribeStatement = "(rule (fact (RobotPosition $a $b $c)) --> (notify (context (RobotPosition $a $b $c))))";
+		System.out.println(dc.subscribe(subscribeStatement));
+		subscribeStatement = "(rule (fact (RobotLoading $a $b)) --> (notify (context (RobotLoading $a $b))))";
+		System.out.println(dc.subscribe(subscribeStatement));
+
 		System.out.println("??");
-		
 		//subscribeStatement = "(rule (fact (UserIntention $person $intention)) --> (notify (UserIntention $person $intention)))";
 		//dc.subscribe(subscribeStatement);
 		
@@ -256,9 +260,7 @@ public class TaskManager_Robot extends ArbiAgent {
 					String packageName = gl.getExpression(0).toString();
 					packageName = packageName.substring(1, packageName.length() - 1);
 					initServicePackage(packageName);
-				} else if(gl.getName().equals("context")){
-					String recievedContext = "(ContextRecieved "+ gl.getExpression(0).toString() + ")";
-					msgManager.assertGL(recievedContext);
+					msgManager.assertGL(gl.toString());
 				} else if(gl.getName().equals("relationChanged")) {
 					String relationChanged = "(relationChanged " + gl.getExpression(0).toString() + ")";
 					msgManager.assertGL(relationChanged);
@@ -267,19 +269,13 @@ public class TaskManager_Robot extends ArbiAgent {
 				} else if (gl.getName().equals("GoalRequest")) {
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
 					msgManager.assertFact(goalGL.getName() + "RequestedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
-				} else if(gl.getExpression(0).isGeneralizedList()) { 
-					if (gl.getExpression(0).asGeneralizedList().getName().equals("actionID") &&
-							gl.getExpression(1).asValue().stringValue().equals("success")) {
-						System.out.println("?????" + gl.toString());
-						
-						String actionResult = "(actionCompleted "+ gl.getExpression(0).asGeneralizedList().getExpression(0) + ")";
-						System.out.println(actionResult);
-						msgManager.assertGL(actionResult);	
-					}
+				} else if (gl.getName().equals("context")) {
+					String recievedContext = "(ContextRecieved \"" + gl.getExpression(0).asGeneralizedList().getName() + "\" " + gl.getExpression(0).toString() + ")";
+					msgManager.assertGL(recievedContext);
 				}
 				
 				else {
-					System.out.println(data);
+					//System.out.println("recieved message : " + data);
 					msgManager.assertGL(data);
 				}
 
@@ -316,7 +312,6 @@ public class TaskManager_Robot extends ArbiAgent {
 				msgManager.updateFact(gl.getExpression(0).toString(), gl.getExpression(1).toString());
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -326,7 +321,7 @@ public class TaskManager_Robot extends ArbiAgent {
 
 	@Override
 	public void onData(String sender, String data) {
-		System.out.println("recieved data from " + sender + " : " + data);
+		//System.out.println("recieved data from " + sender + " : " + data);
 		RecievedMessage msg = new RecievedMessage(sender, data);
 		messageQueue.add(msg);
 		System.out.println("message add complete " + sender + " : " + data);
@@ -352,11 +347,11 @@ public class TaskManager_Robot extends ArbiAgent {
 		while (true) {
 			i++;
 			String data = "(ServicePackage \"" + packageName + "\" \"plan\" \"" + i + "\" $a)";
-
+			System.out.println(data);
 			retrieve = dc.retrieveFact(data);
-			System.out.println("plan" + i + " retrieval");
-
-			if (retrieve.equals("(fail)")) {
+			System.out.println("plan " + i + " retrieval");
+			System.out.println(retrieve);
+			if (retrieve.equals("(fail)") || retrieve.equals("(error)")) {
 				break;
 			}
 
@@ -372,7 +367,6 @@ public class TaskManager_Robot extends ArbiAgent {
 			JAMParser.parseString(interpreter, plan);
 		}
 		i = 0;
-
 		while (true) {
 			i++;
 
@@ -380,7 +374,7 @@ public class TaskManager_Robot extends ArbiAgent {
 			retrieve = dc.retrieveFact(data);
 			System.out.println("context retrieval : " + retrieve);
 
-			if (retrieve.equals("(fail)")) {
+			if (retrieve.equals("(fail)") || retrieve.equals("(error)")) {
 				break;
 			}
 
@@ -424,8 +418,7 @@ public class TaskManager_Robot extends ArbiAgent {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		this.addMessage("dispatcher", "(PostGoal (initiation))");
+		//this.addMessage("dispatcher", "(PostGoal (initiation))");
 		
 		System.out.println("****ServicePackage Parse Completed****");
 		System.out.println("****Initiated Service : " + packageName + " ****");

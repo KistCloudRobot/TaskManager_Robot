@@ -13,15 +13,13 @@ plan perform request($channelName, $address, $data, $result){
 	precondition:
 		fact Channel($channelName, $channel);
 	body:
-		System.out.println("mcARBI request : " + $data);
 		$result = $channel.request($address,$data);
-	utility : 10;
+	utility : 1000;
 }
 
-plan perform request($channelName, $address, $data, $resutl){
+plan perform request($channelName, $address, $data, $result){
 	ID : "reqeustByChannelFailed"
 	precondition:
-		fact McARBIAgentCommunicator($communication);
 	body:
 		System.out.println("there is no channel : " + $channelName);
 	utility:-1;

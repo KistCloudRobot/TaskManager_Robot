@@ -2,30 +2,98 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN PERFORM isro:RequestGuideMove($robotID,$vertex,$direction){
-	ID: "http://www.arbi.com//RequestGuideMove"
+PLAN CONCLUDE RequestGuideMove($actionID, $vertex,$direction){
+	ID: "http://www.arbi.com//ConcludeRequestGuideMoveIn"
+	PRECONDITION:
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestGuideMove");
+		
+		POST PERFORM GuideMove($actionID, $vertex,$direction);
+		RETRACT RequestGuideMove($actionID, $vertex,$direction);
+		PERFORM isro:endLog("CONCLUDE", "RequestGuideMove");
+	UTILITY: 10000; 
+}
+
+PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
+	ID: "http://www.arbi.com//GuideMove"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
-		FACT isro:NavigationControllerAddress($address);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:ManagerAddress($address);
+		
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "GuideMove");
+		
+		$data =  "(GuideMove \"" + $actionID + "\" " + $vertex +" \"" + $direction + "\")";
+		
+		$communicationInstance.request($bi, $data);
+		
+		System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction($address, $actionID);
+		POST PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "GuideMove");
+	UTILITY: 11; 
+}
+
+/*
+
+PLAN CONCLUDE RequestGuideMove($actionID, $vertex,$direction){
+	ID: "http://www.arbi.com//RequestGuideMoveOut"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		$direction == "Backward";
+		FACT isro:ManagerAddress($address);
+		
+		
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "isro:RequestGuideMove");
+		
+		$data =  "(GuideMove \"" + $actionID + "\" " + $vertex +" \"Backward\")";
+		
+		$communicationInstance.request($bi, $data);
+		System.out.println("wait id : " + $actionID);
+		
+		PERFORM WaitActionResult($actionID);
+		
+		$data = "(ActionResult \"" + $actionID + "\" \"success\")";
+		PERFORM inform("logistic", $address, $data);
+		
+		PERFORM isro:endLog("CONCLUDE", "isro:RequestGuideMove");
+	UTILITY: 10; 
+}
+
+PLAN PERFORM isro:RequestGuideMove($vertex,$direction){
+	ID: "http://www.arbi.com//RequestGuideMoveout"
+	PRECONDITION:
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($helper);
 		//FACT OnRobotTaskStatus($robot, $status);
 		//$status == "Ready";
 		FACT isro:agent($agent);
+		FACT isro:robot($robot);
+		$direction == "Backward";
+		
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "isro:RequestGuideMove");
 		
 		$actionID = $helper.getActionID($agent);
 			
-		$communicationInstance.request($address, "(GuideMove (actionID \"" + $actionID + "\") \"" + $robotID + "\" " + $vertex +" \"" + $direction + "\")");
-		
+		$data =  "(RequestStationIn \"" + $actionID + "\" \"" + $robotID + "\" \"GuideMove\" " + $vertex +" \"Backward\")";
+		PERFORM request("logistic", $address, $data, $result);
 		System.out.println("wait id : " + $actionID);
 		
-		WAIT actionCompleted($actionID);
-		RETRACT actionCompleted($actionID);
-			
+		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "isro:RequestGuideMove");
 	UTILITY: 10; 
 }
+*/

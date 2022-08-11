@@ -7,11 +7,11 @@ PLAN PERFORM isro:RequestPath($robotID,$start,$end, $path){
 	PRECONDITION:
 		FACT isro:ManagerAddress($address);
 		FACT isro:agent($agent);
-		
+		FACT isro:robot($robot);
 	BODY:
 		PERFORM isro:startLog("PERFORM", "isro:RequestPath");
 		
-		$data = "(RobotPathRequest \"" +$agent + "\" " +$start + " " + $end+ ")";
+		$data = "(RobotPathRequest \"" +$agent + "\" \"" + $robot + "\" " +$start + " " + $end+ ")";
 		System.out.println("data : " + $data);
 		PERFORM request("logistic", $address, $data, $result);			
 		System.out.println("request result : " + $result);

@@ -15,7 +15,7 @@ PLAN PERFORM isro:StationMove($moveType, $argument){
 		System.out.println("PreciseMove!!!");
 		$vertex = $glUtility.retrieveGLExpression($argument, 0);
 		System.out.println("PreciseMove vertex is " + $vertex);
-		PERFORM isro:RequestPreciseMove($robot, $vertex);
+		PERFORM isro:RequestStationIn($moveType, $vertex, "Forward");
 				
 		PERFORM isro:endLog("PERFORM", "isro:StationMove");
 		
@@ -43,7 +43,7 @@ PLAN PERFORM isro:StationMove($moveType, $argument){
 		$direction = $glUtility.retrieveGLExpression($argument, 1);
 		System.out.println("GuideMove vertex is " + $vertex);
 		System.out.println("GuideMove direction is " + $direction);
-		PERFORM isro:RequestGuideMove($robot, $vertex, $direction);
+		PERFORM isro:RequestGuideMove($vertex, $direction);
 				
 		PERFORM isro:endLog("PERFORM", "isro:StationMove");
 		
@@ -67,7 +67,7 @@ PLAN PERFORM isro:StationMove($moveType, $argument){
 		System.out.println("StraightBackMove!!!");
 		$vertex = $glUtility.retrieveGLExpression($argument, 0);
 		System.out.println("StraightBackMove vertex is " + $vertex);
-		PERFORM isro:RequestStraightBackMove($robot, $vertex);
+		PERFORM isro:RequestStraightBackMove($vertex);
 				
 		PERFORM isro:endLog("PERFORM", "isro:StationMove");
 		
