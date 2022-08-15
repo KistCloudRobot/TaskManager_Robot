@@ -21,7 +21,7 @@ PLAN PERFORM CancelMove($actionID) {
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($bi);
 		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
+		//$status == "Move";
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "CancelMove");
