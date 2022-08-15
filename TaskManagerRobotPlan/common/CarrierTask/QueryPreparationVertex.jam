@@ -12,7 +12,7 @@ PLAN perform isro:QueryPreparationVertex($location, $vertex) {
 	BODY :
 		PERFORM  isro:startLog("PERFORM", "isro:QueryPreparationVertex");
 		
-		$queryResult = $communicationInstance.sendQuery($address, "(PreparationVertex \"" + $location + "\" $vertex)");
+		$queryResult = $communicationInstance.sendQuery($address, "(context (preparationVertex \"" + $location + "\" $Vertex))");
 		
 		$vertex = $glUtility.retrieveGLExpression($queryResult, 1);
 			

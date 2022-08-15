@@ -162,13 +162,13 @@ public class TaskManager_Robot extends ArbiAgent {
 		
 		msgManager.assertFact("OnAgentTaskStatus", MY_mcARBI_AGENT_ID, "wait", "wait");
 
-		msgManager.assertFact("RobotPosition", ENV_ROBOT_NAME, 0, 0);
-		msgManager.assertFact("RobotAt", ENV_ROBOT_NAME, ENV_WAIT_VERTEX, ENV_WAIT_VERTEX);
+		msgManager.assertFact("robotPosition", ENV_ROBOT_NAME, 0, 0);
+		msgManager.assertFact("robotAt", ENV_ROBOT_NAME, ENV_WAIT_VERTEX, ENV_WAIT_VERTEX);
 
-		msgManager.assertFact("RobotLoading", ENV_ROBOT_NAME, "Unloading");
-		msgManager.assertFact("RobotVelocity", ENV_ROBOT_NAME, 0);
-		msgManager.assertFact("BatteryRemain", ENV_ROBOT_NAME, 50);
-		msgManager.assertFact("OnRobotTaskStatus", ENV_ROBOT_NAME, "wait");
+		msgManager.assertFact("robotLoading", ENV_ROBOT_NAME, "Unloading");
+		msgManager.assertFact("robotVelocity", ENV_ROBOT_NAME, 0);
+		msgManager.assertFact("batteryRemain", ENV_ROBOT_NAME, 50);
+		msgManager.assertFact("onRobotTaskStatus", ENV_ROBOT_NAME, "wait");
 		
 		mcARBIAgentCommunicator = new McARBIAgentCommunicator(messageQueue);
 		

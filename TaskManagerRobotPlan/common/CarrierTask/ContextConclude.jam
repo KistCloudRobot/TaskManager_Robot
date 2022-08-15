@@ -1,48 +1,48 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
-PLAN CONCLUDE RobotPosition($robot, $x, $y) {
+PLAN CONCLUDE robotPosition($robot, $x, $y) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotPosition"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
-		$data = "(context (RobotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
+		$data = "(context (robotPosition \"" + $robot + "\" " + $x + " " + $y + "))";
 		PERFORM inform("logistic", $address, $data);
 		
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE RobotLoading($robot, $load) {
+PLAN CONCLUDE robotLoading($robot, $load) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotLoading"
 	PRECONDITION :
 		fact isro:SemanticMapManagerAddress($address);
 	BODY:
 
-		$data = "(context (RobotLoading \"" + $robot + "\" \"" + $load + "\"))";
+		$data = "(context (robotLoading \"" + $robot + "\" \"" + $load + "\"))";
 		PERFORM inform("logistic", $address, $data);
 	UTILITY : 100;
 }
 
 /*
-PLAN CONCLUDE RobotAt($robot, $vertex1, $vertex2) {
+PLAN CONCLUDE robotAt($robot, $vertex1, $vertex2) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotAt"
 	PRECONDITION :
 		
 	BODY:
 
 		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
-		$data = "(RobotAt \"" + $robot + "\" " + $vertex1 + " " + $vertex2 + ")";
+		$data = "(robotAt \"" + $robot + "\" " + $vertex1 + " " + $vertex2 + ")";
 		PERFORM NotifyPermmittedContext($localAgent, $data);
 		
 	UTILITY : 100;
 }
 
 
-PLAN CONCLUDE BatteryRemain($robot, $battery) {
+PLAN CONCLUDE batteryRemain($robot, $battery) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionBatteryRemain"
 	BODY:
 		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
-		$data = "(BatteryRemain \"" + $robot + "\" " + $battery  + ")";
+		$data = "(batteryRemain \"" + $robot + "\" " + $battery  + ")";
 		PERFORM NotifyPermmittedContext($localAgent, $data);
 	UTILITY : 100;
 }

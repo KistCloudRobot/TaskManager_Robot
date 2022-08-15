@@ -19,7 +19,7 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($address);
 		FACT GLUtility($glUtility);
-		FACT RobotAt($robot, $vertex1, $vertex2);
+		FACT robotAt($robot, $vertex1, $vertex2);
 		FACT isro:ReasonerAddress($reasoner);
 		FACT ExtraUtility($util);
 	BODY:

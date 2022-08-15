@@ -7,7 +7,7 @@ PLAN PERFORM isro:EnterToStation($location){
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
-		FACT RobotAt($robot, $vertex1, $vertex2);
+		FACT robotAt($robot, $vertex1, $vertex2);
 		FACT ExtraUtility($util);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "isro:EnterToStation");

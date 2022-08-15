@@ -12,7 +12,7 @@ PLAN perform isro:QueryStationVertex($location, $vertex) {
 	BODY :
 		PERFORM  isro:startLog("PERFORM", "isro:QueryStationVertex");
 		
-		$queryResult = $communicationInstance.sendQuery($address, "(StationVertex \"" + $location + "\" $vertex)");
+		$queryResult = $communicationInstance.sendQuery($address, "(context (stationVertex \"" + $location + "\" $Vertex))");
 		
 		$vertex = $glUtility.retrieveGLExpression($queryResult, 1);
 		
