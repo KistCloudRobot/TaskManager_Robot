@@ -28,9 +28,8 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		
 		PERFORM isro:EnterToStation($location);
 		
-		PERFORM isro:QueryStationVertex($location, $stationVertex);
-		
-		PERFORM isro:RequestLoad($stationVertex);
+		//PERFORM isro:QueryStationVertex($location, $stationVertex);
+		PERFORM isro:RequestLoad();
 		
 		PERFORM isro:ExitFromStation($location);
 				

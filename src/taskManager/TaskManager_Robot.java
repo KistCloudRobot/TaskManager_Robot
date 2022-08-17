@@ -219,9 +219,9 @@ public class TaskManager_Robot extends ArbiAgent {
 		String subscribeStatement = "(rule (fact (context $context)) --> (notify (context $context)))";
 		System.out.println("??");
 		System.out.println(dc.subscribe(subscribeStatement));
-		subscribeStatement = "(rule (fact (RobotPosition $a $b $c)) --> (notify (context (RobotPosition $a $b $c))))";
+		subscribeStatement = "(rule (fact (robotPosition $a $b $c)) --> (notify (context (robotPosition $a $b $c))))";
 		System.out.println(dc.subscribe(subscribeStatement));
-		subscribeStatement = "(rule (fact (RobotLoading $a $b)) --> (notify (context (RobotLoading $a $b))))";
+		subscribeStatement = "(rule (fact (robotLoading $a $b)) --> (notify (context (robotLoading $a $b))))";
 		System.out.println(dc.subscribe(subscribeStatement));
 
 		System.out.println("??");
