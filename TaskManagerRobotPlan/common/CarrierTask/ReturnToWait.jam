@@ -20,7 +20,7 @@ PLAN perform ReturnToWait(){
 		PERFORM  isro:startLog("PERFORM", "ReturnToWait");
 		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "start");
 		
-		RETRIEVE RobotAt($robot, $v1, $v2);
+		RETRIEVE robotAt($robot, $v1, $v2);
 		RETRIEVE WaitVertex($waitVertex);
 		
 		//RETRIEVE ChargeStation($charge);
