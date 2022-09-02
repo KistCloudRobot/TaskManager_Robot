@@ -223,6 +223,12 @@ public class TaskManager_Robot extends ArbiAgent {
 		System.out.println(dc.subscribe(subscribeStatement));
 		subscribeStatement = "(rule (fact (robotLoading $a $b)) --> (notify (context (robotLoading $a $b))))";
 		System.out.println(dc.subscribe(subscribeStatement));
+		subscribeStatement = "(rule (fact (robotDegree $a $b)) --> (notify (context (robotDegree $a $b))))";
+		System.out.println(dc.subscribe(subscribeStatement));
+		subscribeStatement = "(rule (fact (onRobotTaskStatus $a $b)) --> (notify (context (onRobotTaskStatus $a $b))))";
+		System.out.println(dc.subscribe(subscribeStatement));
+		subscribeStatement = "(rule (fact (batteryRemain $a $b)) --> (notify (context (batteryRemain $a $b))))";
+		System.out.println(dc.subscribe(subscribeStatement));
 
 		System.out.println("??");
 		//subscribeStatement = "(rule (fact (UserIntention $person $intention)) --> (notify (UserIntention $person $intention)))";

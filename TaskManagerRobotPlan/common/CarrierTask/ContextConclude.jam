@@ -12,6 +12,17 @@ PLAN CONCLUDE robotPosition($robot, $x, $y) {
 	UTILITY : 100;
 }
 
+PLAN CONCLUDE robotDegree($robot, $Degree) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotDegree"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+
+		$data = "(context (robotDegree \"" + $robot + "\" " + $Degree + "))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+
 PLAN CONCLUDE robotLoading($robot, $load) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotLoading"
 	PRECONDITION :
@@ -22,6 +33,36 @@ PLAN CONCLUDE robotLoading($robot, $load) {
 		PERFORM inform("logistic", $address, $data);
 	UTILITY : 100;
 }
+
+PLAN CONCLUDE batteryRemain($robot, $battery) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionBatteryRemain"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (batteryRemain \"" + $robot + "\" " + $battery  + "))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+PLAN CONCLUDE robotVelocity($robot, $velocity) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotVelocity"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (robotVelocity \"" + $robot + "\" " + $velocity+ "))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+
+PLAN CONCLUDE onRobotTaskStatus($robot, $status) {
+	ID: "http://www.arbi.com//BuiltInPlan#PermissionOnRobotTaskStatus"
+	PRECONDITION :
+		fact isro:SemanticMapManagerAddress($address);
+	BODY:
+		$data = "(context (onRobotTaskStatus \"" + $robot + "\" \"" + $status+ "\"))";
+		PERFORM inform("logistic", $address, $data);
+	UTILITY : 100;
+}
+
 
 /*
 PLAN CONCLUDE robotAt($robot, $vertex1, $vertex2) {
@@ -46,16 +87,16 @@ PLAN CONCLUDE batteryRemain($robot, $battery) {
 		PERFORM NotifyPermmittedContext($localAgent, $data);
 	UTILITY : 100;
 }
-PLAN CONCLUDE RobotVelocity($robot, $velocity) {
+PLAN CONCLUDE robotVelocity($robot, $velocity) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionRobotVelocity"
 	BODY:
 		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
-		$data = "(RobotVelocity \"" + $robot + "\" " + $velocity+ ")";
+		$data = "(robotVelocity \"" + $robot + "\" " + $velocity+ ")";
 		PERFORM NotifyPermmittedContext($localAgent, $data);
 	UTILITY : 100;
 }
 
-PLAN CONCLUDE OnRobotTaskStatus($robot, $status) {
+PLAN CONCLUDE onRobotTaskStatus($robot, $status) {
 	ID: "http://www.arbi.com//BuiltInPlan#PermissionOnRobotTaskStatus"
 	BODY:
 		RETRIEVE isro:LocalTaskManagerAddress($localAgent);
