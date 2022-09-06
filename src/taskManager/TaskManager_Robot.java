@@ -105,23 +105,23 @@ public class TaskManager_Robot extends ArbiAgent {
 		if (ENV_ROBOT_NAME.equals("AMR_LIFT1")) {
 			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT1";
 			ENV_WAIT_VERTEX = 143;
-			ENV_CHARGE_VERTEX = 101;
+			ENV_CHARGE_VERTEX = 500;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		} else if (ENV_ROBOT_NAME.equals("AMR_LIFT2")) {
 			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT2";
-			ENV_WAIT_VERTEX = 156;
+			ENV_WAIT_VERTEX = 157;
 			ENV_CHARGE_VERTEX = 500;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
-		}else if (ENV_ROBOT_NAME.equals("AMR_TOW1")) {
-			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_TOW1";
-			ENV_WAIT_VERTEX = 203;
-			ENV_CHARGE_VERTEX = 103;
-			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
-		}else if (ENV_ROBOT_NAME.equals("AMR_TOW2")) {
-			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_TOW2";
-			ENV_WAIT_VERTEX = 204;
-			ENV_CHARGE_VERTEX = 104;
-			RobotPlanPath = "./TaskManagerRobotPlan/TowPlanList.jam";
+		}else if (ENV_ROBOT_NAME.equals("AMR_LIFT3")) {
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT2";
+			ENV_WAIT_VERTEX = 146;
+			ENV_CHARGE_VERTEX = 501;
+			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
+		}else if (ENV_ROBOT_NAME.equals("AMR_LIFT4")) {
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT2";
+			ENV_WAIT_VERTEX = 158;
+			ENV_CHARGE_VERTEX = 501;
+			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		}
 		ENV_JMS_BROKER = brokerURL;
 		
