@@ -3,7 +3,7 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN perform isro:QueryStationMoveType($location, $direction, $result) {
+PLAN perform isro:QueryMoveType($location, $direction, $result) {
 	ID: "http://www.arbi.com//BuiltInPlan#QueryStationMoveType"
 	PRECONDITION :
 		FACT isro:ContextManagerAddress($address);
@@ -12,7 +12,7 @@ PLAN perform isro:QueryStationMoveType($location, $direction, $result) {
 	BODY :
 		PERFORM  isro:startLog("PERFORM", "isro:QueryStationMoveType");
 		
-		$queryResult = $communicationInstance.sendQuery($address, "(context (stationMoveType \"" + $location +"\" \""+ $direction + "\" $Result))");
+		$queryResult = $communicationInstance.sendQuery($address, "(context (moveType \"" + $location +"\" \""+ $direction + "\" $Result))");
 		
 		$result = $glUtility.retrieveGLExpression($queryResult, 0);
 		$result = $glUtility.retrieveGLExpression($result, 2);

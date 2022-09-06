@@ -12,7 +12,7 @@ PLAN PERFORM isro:EnterToStation($location){
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "isro:EnterToStation");
 		
-		PERFORM isro:QueryStationMoveType($location, "in", $result);
+		PERFORM isro:QueryMoveType($location, "in", $result);
 		System.out.println($result);
 		$moveType = $glUtility.retrieveGLName($result);
 		$vertex =  $glUtility.retrieveGLExpression($result, 0);
