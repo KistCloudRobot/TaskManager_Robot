@@ -113,12 +113,12 @@ public class TaskManager_Robot extends ArbiAgent {
 			ENV_CHARGE_VERTEX = 500;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_LIFT3")) {
-			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT2";
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT3";
 			ENV_WAIT_VERTEX = 146;
 			ENV_CHARGE_VERTEX = 501;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
 		}else if (ENV_ROBOT_NAME.equals("AMR_LIFT4")) {
-			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT2";
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT4";
 			ENV_WAIT_VERTEX = 158;
 			ENV_CHARGE_VERTEX = 501;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
