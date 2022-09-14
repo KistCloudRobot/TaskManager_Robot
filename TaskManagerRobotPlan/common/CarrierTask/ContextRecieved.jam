@@ -13,6 +13,20 @@ PLAN CONCLUDE ContextRecieved($contextName, $context){
 }
 
 PLAN CONCLUDE ContextRecieved($contextName, $context){
+	ID: "http://www.arbi.com//BuiltInPlan#contextRobotPosition"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		$contextName == "robotPosition";
+	BODY:
+		$robot = $glUtility.retrieveGLExpression($context, 0);
+		RETRACT robotPosition($robot, $v1, $v2);
+		$glUtility.assertGL($context);
+		RETRACT ContextRecieved($contextName, $context);
+	UTILITY : 100;
+}
+
+
+PLAN CONCLUDE ContextRecieved($contextName, $context){
 	ID: "http://www.arbi.com//BuiltInPlan#contextRobotDegree"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
@@ -40,34 +54,15 @@ PLAN CONCLUDE ContextRecieved($contextName, $context){
 		
 	UTILITY : 100;
 }
-
 PLAN CONCLUDE ContextRecieved($contextName, $context){
-	ID: "http://www.arbi.com//BuiltInPlan#contextRobotPosition"
-	PRECONDITION:
-		FACT GLUtility($glUtility);
-		$contextName == "robotPosition";
-	BODY:
-		$robot = $glUtility.retrieveGLExpression($context, 0);
-		RETRACT robotPosition($robot, $v1, $v2);
-		RETRACT ContextRecieved($contextName, $context);
-		$glUtility.assertGL($context);
-	UTILITY : 100;
-}
-
-PLAN CONCLUDE ContextRecieved($contextName, $context){
-
 	ID: "http://www.arbi.com//BuiltInPlan#contextRobotAt"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
 		$contextName == "robotAt";
 	BODY:
-		$robot = $glUtility.retrieveGLExpression($context, 0);
 		RETRACT robotAt($robot, $v1, $v2);
-		
 		$glUtility.assertGL($context);
-		
 		RETRACT ContextRecieved($contextName, $context);
-		
 	UTILITY : 100;
 }
 PLAN CONCLUDE ContextRecieved($contextName, $context){

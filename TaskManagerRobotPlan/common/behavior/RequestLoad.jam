@@ -21,9 +21,8 @@ PLAN PERFORM isro:RequestLoad($vertex){
 		
 		PERFORM WaitActionResult($actionID);
 		
-			
 		PERFORM isro:endLog("PERFORM", "isro:RequestLoad");
-	UTILITY: 1; 
+	UTILITY: 10; 
 }
 
 PLAN PERFORM isro:RequestLoad(){
@@ -48,5 +47,5 @@ PLAN PERFORM isro:RequestLoad(){
 		
 			
 		PERFORM isro:endLog("PERFORM", "isro:RequestLoad");
-	UTILITY: 10; 
+	UTILITY: 1; 
 }

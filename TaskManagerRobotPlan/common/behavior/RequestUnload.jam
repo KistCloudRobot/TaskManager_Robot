@@ -24,7 +24,7 @@ PLAN PERFORM isro:RequestUnload($vertex){
 		PERFORM WaitActionResult($actionID);
 			
 		PERFORM isro:endLog("PERFORM", "isro:RequestUnload");
-	UTILITY: 1; 
+	UTILITY: 10; 
 }
 
 PLAN PERFORM isro:RequestUnload(){
@@ -50,5 +50,5 @@ PLAN PERFORM isro:RequestUnload(){
 		PERFORM WaitActionResult($actionID);
 			
 		PERFORM isro:endLog("PERFORM", "isro:RequestUnload");
-	UTILITY: 10; 
+	UTILITY: 1; 
 }

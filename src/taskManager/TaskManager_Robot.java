@@ -252,7 +252,7 @@ public class TaskManager_Robot extends ArbiAgent {
 
 				gl = GLFactory.newGLFromGLString(data);
 
-				//System.out.println("message dequeued : " + gl.toString());
+//				System.out.println("message dequeued : " + gl.toString());
 
 				if (gl.getName().equals("PostGoal")) {
 					//System.out.println("test");
