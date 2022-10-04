@@ -9,6 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import kr.ac.uos.ai.agentCommunicationFramework.agent.AgentExecutor;
 import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
+import kr.ac.uos.ai.arbi.BrokerType;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
 import kr.ac.uos.ai.arbi.ltm.DataSource;
@@ -65,7 +66,7 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager = new GLMessageManager(interpreter);
 		
 		
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,2);
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,BrokerType.ACTIVEMQ);
 		
 //		aplViewer = new APLViewer(interpreter);
 		//logger = new TaskManagerLogger(this,interpreter);
@@ -84,7 +85,7 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager = new GLMessageManager(interpreter);
 		
 		
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,2);
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,BrokerType.ZEROMQ);
 		
 //		aplViewer = new APLViewer(interpreter);
 		//logger = new TaskManagerLogger(this,interpreter);
@@ -202,7 +203,7 @@ public class TaskManager_Robot extends ArbiAgent {
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
 
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + TASKMANAGER_NAME,2);
+		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + TASKMANAGER_NAME,BrokerType.ZEROMQ);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
