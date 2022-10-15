@@ -30,19 +30,12 @@ PLAN PERFORM boot() {
 		RETRIEVE RobotPlanPath($path);
 		$helper.loadPlan($path);
 		
-		
 		PERFORM loadPlanPackage();
 		System.out.println("---Load Complete---");
 		
-		$helper.sleepAwhile(1000);
 		PERFORM ChannelInit();
 		
-		//PERFORM isro:STTRequest();
-		
 		//PERFORM UpdateAgentTaskStatus("mcARBI_LIFT1", "BOOT", "complete");
-
-		//$order = "(PhilipsHueOn \"true\")";
-		//perform isro:requestToIoT("agent://www.arbi.com/cloudAgent#PhilipsHueOn",$order);
-
+		//ASSERT RackLoadingPreparedRequestedFrom("agent://www.mcarbi.com/AMR_LIFT3", "agent://www.mcarbi.com/AMR_LIFT3_2", "(RackLoadingPrepared "AMR_LIFT3" 2)");
 		System.out.println("---Boot Complete---");
 }

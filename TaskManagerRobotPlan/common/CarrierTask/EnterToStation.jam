@@ -1,9 +1,121 @@
 PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+		
+PLAN PERFORM isro:EnterToStationForGrab($location, $stationType){
+	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationLoadAtPalletizing"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:robot($robot);
+		$stationType == "PalletizingStation";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:EnterToStation at palletizing to load");
+		//PERFORM isro:QueryStationVertex($location, $vertex);
+		$vertex = 2;
+		$load = "Loading";
+		System.out.println($robot);
+		System.out.println($load);
+		System.out.println($vertex);
+		PERFORM RequestToPalletizer($robot, $load, $vertex);
+		
+		PERFORM isro:QueryMoveType($location, "in", $result);
+		System.out.println($result);
+		$moveType = $glUtility.retrieveGLName($result);
+		$vertex =  $glUtility.retrieveGLExpression($result, 0);
+		
+		System.out.println("moveType : " + $moveType);
+		System.out.println("argument : " + $vertex);
+		
+		
+		PERFORM RequestStationIn($moveType, $vertex);
+				
+		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
+		
+	UTILITY: 11; 
 
+}
+PLAN PERFORM isro:EnterToStationForPlace($location, $stationType){
+	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationUnloadAtPalletizing"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT isro:robot($robot);
+		$stationType == "PalletizingStation";
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:EnterToStation at palletizing to unload");
+		PERFORM isro:QueryStationVertex($location, $vertex);
+		$load = "Unloading";
+		PERFORM RequestToPalletizer($robot, $load, $vertex);
+		
+		PERFORM isro:QueryMoveType($location, "in", $result);
+		System.out.println($result);
+		$moveType = $glUtility.retrieveGLName($result);
+		$vertex =  $glUtility.retrieveGLExpression($result, 0);
+		
+		System.out.println("moveType : " + $moveType);
+		System.out.println("argument : " + $vertex);
+		
+		
+		PERFORM RequestStationIn($moveType, $vertex);
+				
+		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
+		
+	UTILITY: 11; 
 
-PLAN PERFORM isro:EnterToStation($location){
-	ID: "http://www.arbi.com//BuiltInPlan#EnterToStation"
+}
+
+PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
+	ID: "http://www.arbi.com//BuiltInPlan#RequestToPalletizer11"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:agent($agent);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT PalletizerAgentAddress($address);
+		$load == "Loading";
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RequestToPalletizer");
+		$goalID = $helper.getActionID($agent);
+		
+		$goal = "(RackLoadingPrepared \"" + $robot + "\" " + $vertex + ")";
+		PERFORM RackLoadingPreparedRequestedTo($address, $goalID, $goal);
+		System.out.println("start wait ");
+		PERFORM WaitGoalReport();
+		
+		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
+		
+	UTILITY: 10; 
+
+}
+
+PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
+	ID: "http://www.arbi.com//BuiltInPlan#RequestToPalletizer22"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:agent($agent);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		FACT PalletizerAgentAddress($address);
+		$load == "Unloading";
+	BODY:
+		PERFORM  isro:startLog("PERFORM", "RequestToPalletizer");
+		$goalID = $helper.getActionID($agent);
+		
+		$goal = "(RackUnloadingPrepared \"" + $robot + "\" " + $vertex + ")";
+		PERFORM RackUnloadingPreparedRequestedTo($address, $goalID, $goal);
+		System.out.println("start wait");
+		PERFORM WaitGoalReport();
+		
+		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
+		
+	UTILITY: 10; 
+
+}
+
+PLAN PERFORM isro:EnterToStationForGrab($location, $stationType){
+	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationForGrab"
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
@@ -11,6 +123,33 @@ PLAN PERFORM isro:EnterToStation($location){
 		FACT ExtraUtility($util);
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "isro:EnterToStation");
+		
+		PERFORM isro:QueryMoveType($location, "in", $result);
+		System.out.println($result);
+		$moveType = $glUtility.retrieveGLName($result);
+		$vertex =  $glUtility.retrieveGLExpression($result, 0);
+		
+		System.out.println("moveType : " + $moveType);
+		System.out.println("argument : " + $vertex);
+		
+		PERFORM RequestStationIn($moveType, $vertex);
+				
+		PERFORM isro:endLog("PERFORM", "isro:EnterToStation");
+		
+	UTILITY: 10; 
+
+}
+
+
+PLAN PERFORM isro:EnterToStationForPlace($location, $stationType){
+	ID: "http://www.arbi.com//BuiltInPlan#EnterToStationForPlace"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT GLUtility($glUtility);
+		FACT robotAt($robot, $vertex1, $vertex2);
+		FACT ExtraUtility($util);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:EnterToStation");
 		
 		PERFORM isro:QueryMoveType($location, "in", $result);
 		System.out.println($result);

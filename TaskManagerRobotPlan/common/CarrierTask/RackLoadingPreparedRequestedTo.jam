@@ -1,0 +1,23 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN PERFORM RackLoadingPreparedRequestedTo($worker, $goalID, $goal){
+	ID: "http://www.arbi.com//RackLoadingPreparedRequestedTo"
+	PRECONDITION:
+		FACT GLUtility($glUtility);
+		FACT isro:agent($agent);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "RackLoadingPreparedRequestedTo");
+		
+		$escapedGoal = $glUtility.escapeGL($goal);
+		
+		//System.out.println("escapedGoal : " + $escapedGoal);
+		//System.out.println("$agent = " + $agent);
+		$data = "(GoalRequest (RackLoadingPrepared \"" +$agent+ "\" \"" +$goalID+ "\" \""+ $escapedGoal + "\"))";
+		System.out.println($data);
+		System.out.println($worker);
+		PERFORM inform("logistic",$worker, $data);
+		
+		PERFORM isro:endLog("PERFORM", "RackLoadingPreparedRequestedTo");
+	UTILITY : 10;
+}

@@ -87,7 +87,7 @@ public class McARBIAgentCommunicator extends Agent{
 
 	@Override
 	public synchronized String onRequest(String sender, String request) {
-		//System.out.println("received data from " + sender + " : " + request);
+		System.out.println("received agent request from " + sender + " : " + request);
 		RecievedMessage msg = new RecievedMessage(sender, request);
 		messageQueue.add(msg);
 

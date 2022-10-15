@@ -11,6 +11,7 @@ FACTS:
 	FACT  isro:ManagerAddress("agent://www.mcarbi.com/Local");
 	FACT  isro:ServicePackageDispatcherAddress("agent://www.arbi.com/ServiceDispatcher");
 	FACT  isro:SemanticMapManagerAddress("agent://www.mcarbi.com/SemanticMapManager");
+	FACT  PalletizerAgentAddress("agent://www.mcarbi.com/Palletizer");
 	/*
 	FACT  isro:BehaviorAddress("agent://www.arbi.com/Lift2/BehaviorInterface");
 	FACT  isro:ReasonerAddress("agent://www.arbi.com/Lift2/TaskReasoner");

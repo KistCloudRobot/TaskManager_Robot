@@ -30,7 +30,14 @@ public class GLMessageManager {
 		new GLMessageManager();
 		
 	}
-
+	public String convertObjectToString(Object str) {
+		
+		System.out.println("test");
+		System.out.println(str.getClass().getName());
+		System.out.println(str.toString());
+		return str.toString();
+	}
+	
 	public int toInteger(String input) {
 		double doub = Double.parseDouble(input);
 		int result = (int) doub;

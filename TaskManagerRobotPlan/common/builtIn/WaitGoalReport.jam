@@ -1,10 +1,10 @@
 
-PLAN PERFORM WaitGoalReport($goalID){
+PLAN PERFORM WaitGoalReport(){
 	ID: "http://www.arbi.com//WaitGoalReport"
 	PRECONDITION:
-		FACT GLUtility($glUtility);
 		FACT GoalReport($executor, $goalID, $result);
 	BODY:
-		$glUtility.assertGL($result);
+		System.out.println("goal report checked");
 		RETRACT GoalReport($executor, $goalID, $result);
+	UTILITY : 1000;
 }

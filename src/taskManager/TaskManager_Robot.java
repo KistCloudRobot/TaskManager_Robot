@@ -108,6 +108,7 @@ public class TaskManager_Robot extends ArbiAgent {
 			ENV_WAIT_VERTEX = 143;
 			ENV_CHARGE_VERTEX = 500;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
+			
 		} else if (ENV_ROBOT_NAME.equals("AMR_LIFT2")) {
 			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/AMR_LIFT2";
 			ENV_WAIT_VERTEX = 157;
@@ -123,6 +124,11 @@ public class TaskManager_Robot extends ArbiAgent {
 			ENV_WAIT_VERTEX = 158;
 			ENV_CHARGE_VERTEX = 501;
 			RobotPlanPath = "./TaskManagerRobotPlan/LiftPlanList.jam";
+		} else if (ENV_ROBOT_NAME.equals("Palletizer")) {
+			MY_mcARBI_AGENT_ID = "agent://www.mcarbi.com/Palletizer";
+			ENV_WAIT_VERTEX = 0;
+			ENV_CHARGE_VERTEX = 0;
+			RobotPlanPath = "./TaskManagerRobotPlan/PalletizerPlanList.jam";
 		}
 		ENV_JMS_BROKER = brokerURL;
 		
@@ -239,7 +245,6 @@ public class TaskManager_Robot extends ArbiAgent {
 
 	
 	public boolean dequeueMessage() {
-
 		if (messageQueue.isEmpty())
 			return false;
 		else {
@@ -248,7 +253,6 @@ public class TaskManager_Robot extends ArbiAgent {
 				GeneralizedList gl = null;
 				String data = message.getMessage();
 				String sender = message.getSender();
-
 //				aplViewer.msgReceived(data, sender);
 
 				gl = GLFactory.newGLFromGLString(data);
@@ -272,8 +276,10 @@ public class TaskManager_Robot extends ArbiAgent {
 					String relationChanged = "(relationChanged " + gl.getExpression(0).toString() + ")";
 					msgManager.assertGL(relationChanged);
 				} else if (gl.getName().equals("GoalReport")) {
-					msgManager.assertGL(gl.toString());
+					System.out.println(gl.toString());
+					msgManager.assertFact(gl.toString());
 				} else if (gl.getName().equals("GoalRequest")) {
+					//System.out.println("requested Goal : " + gl.toString());
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();
 					msgManager.assertFact(goalGL.getName() + "RequestedFrom", sender, goalGL.getExpression(1), goalGL.getExpression(2));
 				} else if (gl.getName().equals("context")) {
