@@ -10,5 +10,10 @@ PLAN PERFORM ChannelInit() {
 		ASSERT Channel("logistic", $channel);		
 		
 		System.out.println("---end ChannelInit---");
+		
+		
+		//PERFORM isro:EnterToStationForGrab("station2", "PalletizingStation"); 
+		//PERFORM RackLoadCompleted("agent://www.mcarbi.com/Palletizer");
+		//ASSERT RequestPreciseMove("AMR_LIFT3+Enter",2);
 	UTILITY : 10000;
 }

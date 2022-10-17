@@ -33,10 +33,10 @@ PLAN PERFORM Move($actionID, $path) {
 		System.out.println("wait id : " + $actionID);
 		
 		ASSERT RequestedAction($address, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Move");
-	UTILITY: 20; 
+	UTILITY: 30; 
 }
 /*
 PLAN PERFORM isro:RequestMove($path){

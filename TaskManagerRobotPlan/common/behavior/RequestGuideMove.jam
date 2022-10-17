@@ -34,10 +34,10 @@ PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
 		
 		System.out.println("wait id : " + $actionID);
 		ASSERT RequestedAction($address, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "GuideMove");
-	UTILITY: 20; 
+	UTILITY: 30; 
 }
 
 /*

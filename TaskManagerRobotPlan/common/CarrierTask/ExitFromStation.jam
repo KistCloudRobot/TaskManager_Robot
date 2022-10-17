@@ -39,7 +39,6 @@ PLAN PERFORM isro:ExitFromStation($location, $stationType){
 		FACT ExtraUtility($util);
 	BODY:
 	
-		System.out.println("start exit22");
 		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
 		
 		PERFORM isro:QueryMoveType($location, "out", $result);

@@ -11,12 +11,8 @@ PLAN PERFORM isro:EnterToStationForGrab($location, $stationType){
 		$stationType == "PalletizingStation";
 	BODY:
 		PERFORM isro:startLog("PERFORM", "isro:EnterToStation at palletizing to load");
-		//PERFORM isro:QueryStationVertex($location, $vertex);
-		$vertex = 2;
+		PERFORM isro:QueryStationVertex($location, $vertex);
 		$load = "Loading";
-		System.out.println($robot);
-		System.out.println($load);
-		System.out.println($vertex);
 		PERFORM RequestToPalletizer($robot, $load, $vertex);
 		
 		PERFORM isro:QueryMoveType($location, "in", $result);
@@ -81,8 +77,7 @@ PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
 		
 		$goal = "(RackLoadingPrepared \"" + $robot + "\" " + $vertex + ")";
 		PERFORM RackLoadingPreparedRequestedTo($address, $goalID, $goal);
-		System.out.println("start wait ");
-		PERFORM WaitGoalReport();
+		PERFORM WaitGoalResult($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
 		
@@ -105,8 +100,7 @@ PLAN PERFORM RequestToPalletizer($robot, $load, $vertex){
 		
 		$goal = "(RackUnloadingPrepared \"" + $robot + "\" " + $vertex + ")";
 		PERFORM RackUnloadingPreparedRequestedTo($address, $goalID, $goal);
-		System.out.println("start wait");
-		PERFORM WaitGoalReport();
+		PERFORM WaitGoalResult($goalID);
 		
 		PERFORM isro:endLog("PERFORM", "RequestToPalletizer");
 		

@@ -5,7 +5,9 @@ PLAN CONCLUDE RequestPreciseMove($actionID, $vertex){
 	ID: "http://www.arbi.com//ConcludeRequestPreciseMove"
 	BODY:
 		PERFORM isro:startLog("CONCLUDE", "RequestPreciseMove");
-		POST PERFORM PreciseMove($actionID, $vertex,$direction);
+		System.out.println($actionID);
+		System.out.println($vertex);
+		POST PERFORM PreciseMove($actionID, $vertex);
 		RETRACT RequestPreciseMove($actionID, $vertex);
 		PERFORM isro:endLog("CONCLUDE", "RequestPreciseMove");
 	UTILITY: 10000; 
@@ -17,10 +19,7 @@ PLAN PERFORM PreciseMove($actionID, $vertex){
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($bi);
-		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
 		FACT isro:ManagerAddress($address);
-		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PreciseMove");
 		
@@ -29,11 +28,11 @@ PLAN PERFORM PreciseMove($actionID, $vertex){
 		$communicationInstance.request($bi, $data);
 		System.out.println("wait id : " + $actionID);
 		ASSERT RequestedAction($address, $actionID);
-		POST PERFORM WaitActionResult($actionID);
+		PERFORM WaitActionResult($actionID);
 
 		
 		PERFORM isro:endLog("PERFORM", "PreciseMove");
-	UTILITY: 20; 
+	UTILITY: 30; 
 }
 
 /*

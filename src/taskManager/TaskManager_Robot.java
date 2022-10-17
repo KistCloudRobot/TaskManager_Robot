@@ -275,9 +275,8 @@ public class TaskManager_Robot extends ArbiAgent {
 				} else if(gl.getName().equals("relationChanged")) {
 					String relationChanged = "(relationChanged " + gl.getExpression(0).toString() + ")";
 					msgManager.assertGL(relationChanged);
-				} else if (gl.getName().equals("GoalReport")) {
-					System.out.println(gl.toString());
-					msgManager.assertFact(gl.toString());
+				} else if (gl.getName().equals("GoalResult")) {
+					msgManager.assertGL(gl.toString());
 				} else if (gl.getName().equals("GoalRequest")) {
 					//System.out.println("requested Goal : " + gl.toString());
 					GeneralizedList goalGL = gl.getExpression(0).asGeneralizedList();

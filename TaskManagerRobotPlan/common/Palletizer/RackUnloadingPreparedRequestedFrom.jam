@@ -21,7 +21,7 @@ PLAN CONCLUDE RackUnloadingPreparedRequestedFrom($requester, $goalID, $goal){
 		System.out.println($stationVertex);
 		PERFORM RackUnloadingPrepared($robotID, $stationVertex);	
 		
-		$data = "(GoalReport \"" + $agent + "\" " + $goalID + " \"success\")";
+		$data = "(GoalResult \"" + $agent + "\" " + $goalID + " \"success\")";
 		PERFORM inform("logistic",$requester, $data);
 		
 		RETRACT RackLoadingPreparedRequestedFrom($a, $b, $c);

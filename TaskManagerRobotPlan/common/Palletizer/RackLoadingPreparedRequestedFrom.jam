@@ -15,12 +15,8 @@ PLAN CONCLUDE RackLoadingPreparedRequestedFrom($requester, $goalID, $goal){
 		$stationVertex =  $glUtility.retrieveGLExpression($unescapedGoal, 1);
 		
 		PERFORM RackLoadingPrepared($robotID, $stationVertex);		
-		System.out.println($requester);
-		System.out.println($agent);
-		System.out.println($goalID);
-		System.out.println($goal);
 		
-		$data = "(GoalReport \"" + $agent + "\" " + $goalID + " \"success\")";
+		$data = "(GoalResult \"" + $agent + "\" " + $goalID + " \"success\")";
 		System.out.println($data);
 		PERFORM inform("logistic", $requester, $data);
 		

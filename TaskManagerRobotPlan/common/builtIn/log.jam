@@ -49,7 +49,7 @@ PLAN PERFORM isro:endLog($behave, $name) {
 		FACT LOG;
 		
 	BODY:
-		System.out.println("JAM PLAN "+$behave+" "+$name+"EXECUTED");
+		System.out.println("JAM PLAN "+$behave+" "+$name+" EXECUTED");
 		
 }
 PLAN PERFORM isro:endLog($behave, $name) {
