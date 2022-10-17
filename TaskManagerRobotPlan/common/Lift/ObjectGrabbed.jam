@@ -32,7 +32,7 @@ PLAN PERFORM ObjectGrabbed($object, $location){
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
 		PERFORM isro:RequestLoad($stationVertex);
 		$stationType = "PalletizingStation";
-		PERFORM isro:ExitFromStation($location, $stationType);
+		PERFORM isro:ExitFromStationForGrab($location, $stationType);
 				
 		PERFORM  isro:UpdateAgentTaskStatus("ObjectGrabbed", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectGrabbed");
