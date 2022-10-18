@@ -25,9 +25,9 @@ PLAN perform ReturnToWait(){
 		
 		//RETRIEVE ChargeStation($charge);
 		
-		PERFORM  isro:RequestNavigate($v1,$waitVertex);
+		PERFORM  isro:RequestNavigate($waitVertex);
 
 		PERFORM  isro:UpdateAgentTaskStatus("ReturnToWait", "complete");
 		PERFORM  isro:endLog("PERFORM", "ReturnToWait");
-	UTILITY: 10; 
+	UTILITY: 30; 
 }

@@ -26,7 +26,7 @@ PLAN perform MoveToLocation($location){
 		
 		PERFORM isro:QueryPriorVertex($location, $preparationVertex);
 
-		PERFORM  isro:RequestNavigate($vertex1, $preparationVertex);
+		PERFORM  isro:RequestNavigate($preparationVertex);
 		
 		PERFORM  isro:UpdateAgentTaskStatus("MoveToLocation", "complete");
 		PERFORM  isro:endLog("PERFORM", "MoveToLocation");

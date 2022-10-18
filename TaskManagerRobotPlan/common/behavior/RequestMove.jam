@@ -36,7 +36,7 @@ PLAN PERFORM Move($actionID, $path) {
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "Move");
-	UTILITY: 30; 
+	UTILITY: 80; 
 }
 /*
 PLAN PERFORM isro:RequestMove($path){

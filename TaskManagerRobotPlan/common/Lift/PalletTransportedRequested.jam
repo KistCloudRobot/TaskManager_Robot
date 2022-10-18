@@ -47,9 +47,8 @@ PLAN PERFORM PalletTransportedReportedTo($manager, $goalID, $goal){
 		RETRIEVE PalletTransportedRequestedFrom($m, $gID, $g);
 		System.out.println("Report Goal : " + $goal);
 
-		$goal = $glUtility.escapeGL($goal);
-		$receiver = "agent://www.arbi.com/" + $manager + "/TaskManager";		
-		$communicationInstance.inform($receiver,"(GoalReport (PalletTransported \"Lift1\" \""+ $goalID + "\" \""+ $goal +"\"))");
+		$goal = $glUtility.escapeGL($goal);	
+		PERFORM inform("logistic",$m,"(GoalReport (PalletTransported \"Lift1\" \""+ $goalID + "\" \""+ $goal +"\"))");
 		
 		RETRACT PalletTransportedRequestedFrom($m, $gID, $g);
 		

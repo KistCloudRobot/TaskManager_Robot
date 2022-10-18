@@ -32,7 +32,7 @@ PLAN PERFORM PreciseMove($actionID, $vertex){
 
 		
 		PERFORM isro:endLog("PERFORM", "PreciseMove");
-	UTILITY: 30; 
+	UTILITY:80; 
 }
 
 /*

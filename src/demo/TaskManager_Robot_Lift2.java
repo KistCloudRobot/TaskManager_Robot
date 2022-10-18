@@ -7,8 +7,8 @@ public class TaskManager_Robot_Lift2 {
 		String brokerAddress;
 		String robotID;
 		if(args.length == 0) {
-//			brokerAddress = "tcp://172.16.165.141:61115";
-			brokerAddress = "tcp://127.0.0.1:65115";
+			brokerAddress = "tcp://172.16.165.141:61115";
+//			brokerAddress = "tcp://127.0.0.1:65115";
 			robotID = "AMR_LIFT2";	
 		} else {
 			robotID = args[0];

@@ -32,7 +32,7 @@ PLAN PERFORM StraightBackMove($actionID,$vertex){
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "StraightBackMove");
-	UTILITY: 30; 
+	UTILITY: 80; 
 }
 
 

@@ -37,7 +37,7 @@ PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
 		PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "GuideMove");
-	UTILITY: 30; 
+	UTILITY: 80; 
 }
 
 /*
