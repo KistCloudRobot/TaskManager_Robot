@@ -20,7 +20,7 @@ PLAN CONCLUDE RackUnloadCompleted() {
 		PERFORM  isro:startLog("PERFORM", "RackLoadCompleted");
 		
 		PERFORM RequestPalletizerStart();
-		RETRACT RackLoadCompleted();
+		RETRACT RackUnloadCompleted();
 		
 		PERFORM isro:endLog("PERFORM", "RackLoadCompleted");
 		

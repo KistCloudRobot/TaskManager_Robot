@@ -23,6 +23,8 @@ PLAN PERFORM isro:ExitFromStationForGrab($location, $stationType){
 		PERFORM RequestStationOut($moveType, $vertex);
 //		PERFORM isro:StationMove($moveType, $result);
 		
+		PERFORM RackUnloadCompleted($address);
+		
 		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
 		
 	UTILITY: 11; 

@@ -1,0 +1,46 @@
+PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
+	ID: "http://www.arbi.com//FlatPreciseMove3"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:ManagerAddress($address);
+		$vertex == 3;
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
+		
+		$data =  "(FlatPreciseMove \"" + $actionID + "\" " + $vertex +")";
+		
+		$communicationInstance.request($bi, $data);
+		
+		System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction($address, $actionID);
+		PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
+	UTILITY: 80; 
+}
+PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
+	ID: "http://www.arbi.com//FlatPreciseMove4"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:ManagerAddress($address);
+		$vertex == 4;
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
+		
+		$data =  "(FlatPreciseMove \"" + $actionID + "\" " + $vertex +")";
+		
+		$communicationInstance.request($bi, $data);
+		
+		System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction($address, $actionID);
+		PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
+	UTILITY: 80; 
+}

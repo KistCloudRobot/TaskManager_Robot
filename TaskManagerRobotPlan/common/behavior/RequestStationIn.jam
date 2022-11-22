@@ -11,8 +11,6 @@ PLAN PERFORM RequestStationIn($moveType, $vertex){
 		FACT isro:agent($agent);
 		FACT isro:robot($robotID);
 		FACT isro:ManagerAddress($address);
-		
-		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "isro:RequestStationIn");
 		

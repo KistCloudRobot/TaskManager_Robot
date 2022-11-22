@@ -85,7 +85,7 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager = new GLMessageManager(interpreter);
 		
 		
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,BrokerType.ZEROMQ);
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,BrokerType.ACTIVEMQ);
 		
 //		aplViewer = new APLViewer(interpreter);
 		//logger = new TaskManagerLogger(this,interpreter);
@@ -209,7 +209,7 @@ public class TaskManager_Robot extends ArbiAgent {
 	public void onStart() {
 		dc = new TaskManagerDataSource(this);
 
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + TASKMANAGER_NAME,BrokerType.ZEROMQ);
+		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + TASKMANAGER_NAME,BrokerType.ACTIVEMQ);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");

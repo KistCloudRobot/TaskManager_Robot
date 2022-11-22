@@ -24,7 +24,6 @@ PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
 		//$status == "Ready";
 		FACT isro:ManagerAddress($address);
 		
-		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "GuideMove");
 		

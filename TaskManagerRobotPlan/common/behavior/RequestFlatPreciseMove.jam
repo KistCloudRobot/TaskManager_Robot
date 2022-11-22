@@ -1,0 +1,65 @@
+PREFIXES:
+		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
+
+PLAN CONCLUDE RequestFlatPreciseMove($actionID, $vertex){
+	ID: "http://www.arbi.com//ConcludeRequestFlatPreciseMove"
+	BODY:
+		PERFORM isro:startLog("CONCLUDE", "RequestFlatPreciseMove");
+		System.out.println($actionID);
+		System.out.println($vertex);
+		POST PERFORM FlatPreciseMove($actionID, $vertex);
+		RETRACT RequestFlatPreciseMove($actionID, $vertex);
+		PERFORM isro:endLog("CONCLUDE", "RequestFlatPreciseMove");
+	UTILITY: 10000; 
+}
+
+
+PLAN PERFORM FlatPreciseMove($actionID, $vertex){
+	ID: "http://www.arbi.com//FlatPreciseMove"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($bi);
+		FACT isro:ManagerAddress($address);
+	BODY:
+		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
+		
+		$data =  "(FlatPreciseMove \"" + $actionID + "\" " + $vertex +")";
+		
+		$communicationInstance.request($bi, $data);
+		System.out.println("wait id : " + $actionID);
+		ASSERT RequestedAction($address, $actionID);
+		PERFORM WaitActionResult($actionID);
+
+		
+		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
+	UTILITY:80; 
+}
+
+/*
+PLAN PERFORM isro:RequestPreciseMove($vertex){
+	ID: "http://www.arbi.com//RequestPreciseMove"
+	PRECONDITION:
+		FACT Communication($communicationInstance);
+		FACT isro:BehaviorAddress($address);
+		FACT GLUtility($glUtility);
+		FACT ExtraUtility($helper);
+		//FACT OnRobotTaskStatus($robot, $status);
+		//$status == "Ready";
+		FACT isro:agent($agent);
+		FACT isro:robot($robot);
+		FACT isro:ManagerAddress($address);
+		
+	BODY:
+		PERFORM isro:startLog("PERFORM", "isro:RequestPreciseMove");
+		
+		$actionID = $helper.getActionID($agent);
+		$data =  "(RequestStationIn \"" + $actionID + "\" \"" + $robotID + "\" \"PreciseMove\" " + $vertex +" \"Forward\")";
+		PERFORM request("logistic", $address, $data, $result);
+			
+		System.out.println("wait id : " + $actionID);
+		PERFORM WaitActionResult($actionID);
+		
+		PERFORM isro:endLog("PERFORM", "isro:RequestPreciseMove");
+	UTILITY: 10; 
+}
+*/
