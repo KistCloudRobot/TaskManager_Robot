@@ -12,7 +12,6 @@ import kr.ac.uos.ai.agentCommunicationFramework.channelServer.ChannelType;
 import kr.ac.uos.ai.arbi.BrokerType;
 import kr.ac.uos.ai.arbi.agent.ArbiAgent;
 import kr.ac.uos.ai.arbi.agent.ArbiAgentExecutor;
-import kr.ac.uos.ai.arbi.ltm.DataSource;
 import kr.ac.uos.ai.arbi.model.GLFactory;
 import kr.ac.uos.ai.arbi.model.GeneralizedList;
 import kr.ac.uos.ai.arbi.model.Value;
@@ -56,25 +55,25 @@ public class TaskManager_Robot extends ArbiAgent {
 	private TaskManagerDataSource dc;
 
 	
-	public TaskManager_Robot() {
-		
-		System.out.println("start");
-		initAddress();
-		interpreter = JAM.parse(new String[] { "./TaskManagerLiftPlan/boot.jam" });
-		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
-		
-		msgManager = new GLMessageManager(interpreter);
-		
-		
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,BrokerType.ACTIVEMQ);
-		
+//	public TaskManager_Robot() {
+//		
+//		System.out.println("start");
+//		initAddress();
+//		interpreter = JAM.parse(new String[] { "./TaskManagerLiftPlan/boot.jam" });
+//		messageQueue = new LinkedBlockingQueue<RecievedMessage>();
+//		
+//		msgManager = new GLMessageManager(interpreter);
+//		
+//		
+//		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,BrokerType.ACTIVEMQ);
+//		
 //		aplViewer = new APLViewer(interpreter);
-		//logger = new TaskManagerLogger(this,interpreter);
-		init();
-	}
+//		logger = new TaskManagerLogger(this,interpreter);
+//		init();
+//	}
 	
 	
-	public TaskManager_Robot(String robotID, String ip) {
+	public TaskManager_Robot(String robotID, String ip, int port, BrokerType brokerType) {
 		
 		System.out.println("start");
 		System.out.println("robotID : " + robotID);
@@ -85,8 +84,10 @@ public class TaskManager_Robot extends ArbiAgent {
 		msgManager = new GLMessageManager(interpreter);
 		
 		
-		ArbiAgentExecutor.execute(ENV_JMS_BROKER, AGENT_PREFIX + TASKMANAGER_NAME, this,BrokerType.ACTIVEMQ);
-		
+		ArbiAgentExecutor.execute(ENV_JMS_BROKER, port, AGENT_PREFIX + TASKMANAGER_NAME, this,brokerType);
+
+		dc = new TaskManagerDataSource(this);
+		dc.connect(ENV_JMS_BROKER, port, DATASOURCE_PREFIX + TASKMANAGER_NAME, brokerType);
 //		aplViewer = new APLViewer(interpreter);
 		//logger = new TaskManagerLogger(this,interpreter);
 		init();
@@ -96,7 +97,7 @@ public class TaskManager_Robot extends ArbiAgent {
 
 		String brokerURL = "";
 		if(ip.equals("env")) {
-			brokerURL = "tcp://" + System.getenv("JMS_BROKER");
+			brokerURL = System.getenv("JMS_BROKER");
 		} else {
 			brokerURL = ip;
 		}
@@ -207,9 +208,6 @@ public class TaskManager_Robot extends ArbiAgent {
 
 	@Override
 	public void onStart() {
-		dc = new TaskManagerDataSource(this);
-
-		dc.connect(ENV_JMS_BROKER, DATASOURCE_PREFIX + TASKMANAGER_NAME,BrokerType.ACTIVEMQ);
 
 		System.out.println("======Start Test Agent======");
 		System.out.println("??");
@@ -448,9 +446,9 @@ public class TaskManager_Robot extends ArbiAgent {
 	public String toString() {
 		return "TaskManager";
 	}
-
-	public static void main(String[] args) {
-
-		new TaskManager_Robot();
-	}
+//
+//	public static void main(String[] args) {
+//
+//		new TaskManager_Robot();
+//	}
 }
