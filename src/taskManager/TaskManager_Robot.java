@@ -230,7 +230,7 @@ public class TaskManager_Robot extends ArbiAgent {
 		System.out.println(dc.subscribe(subscribeStatement));
 		subscribeStatement = "(rule (fact (robotDegree $a $b)) --> (notify (context (robotDegree $a $b))))";
 		System.out.println(dc.subscribe(subscribeStatement));
-		subscribeStatement = "(rule (fact (onRobotTaskStatus $a $b)) --> (notify (context (onRobotTaskStatus $a $b))))";
+		subscribeStatement = "(rule (fact (robotStatus $a $b)) --> (notify (context (robotStatus $a $b))))";
 		System.out.println(dc.subscribe(subscribeStatement));
 		subscribeStatement = "(rule (fact (batteryRemain $a $b)) --> (notify (context (batteryRemain $a $b))))";
 		System.out.println(dc.subscribe(subscribeStatement));
@@ -334,7 +334,7 @@ public class TaskManager_Robot extends ArbiAgent {
 		//System.out.println("recieved data from " + sender + " : " + data);
 		RecievedMessage msg = new RecievedMessage(sender, data);
 		messageQueue.add(msg);
-		System.out.println("message add complete " + sender + " : " + data);
+//		System.out.println("message add complete " + sender + " : " + data);
 	}
 
 	@Override

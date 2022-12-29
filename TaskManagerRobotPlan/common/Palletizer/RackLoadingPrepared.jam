@@ -11,7 +11,7 @@ PLAN PERFORM RackLoadingPrepared($robotID, $vertex){
 		PERFORM isro:startLog("PERFORM", "RackLoadingPrepared");
 		
 		PERFORM RequestPalletizerStop();
-		PERFORM RequestExitPalletizer($robotID, $vertex);
+		//PERFORM RequestExitPalletizer($robotID, $vertex);
 		
 		PERFORM isro:endLog("PERFORM", "RackLoadingPrepared");
 	UTILITY : 10;

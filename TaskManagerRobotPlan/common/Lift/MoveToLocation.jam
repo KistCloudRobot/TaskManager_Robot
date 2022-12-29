@@ -32,7 +32,7 @@ PLAN perform MoveToLocation($location){
 		PERFORM  isro:endLog("PERFORM", "MoveToLocation");
 		
 		$communicationInstance.inform($reasoner, "(goalComplete (MoveToLocation \"" + $location +"\"))");
-	UTILITY: 10; 
+	UTILITY: 20; 
 }
 
 /*

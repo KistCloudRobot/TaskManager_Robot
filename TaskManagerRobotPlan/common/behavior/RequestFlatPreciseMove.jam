@@ -20,6 +20,7 @@ PLAN PERFORM FlatPreciseMove($actionID, $vertex){
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($bi);
 		FACT isro:ManagerAddress($address);
+		FACT robotStatus($robotID, "Ready");
 	BODY:
 		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
 		

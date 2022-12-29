@@ -20,6 +20,5 @@ public class TaskManager_Robot_Lift4 {
 			port = Integer.parseInt(args[2]);
 		}
 		TaskManager_Robot robot = new TaskManager_Robot(robotID, brokerAddress, port, BrokerType.ACTIVEMQ);
-		
 	}
 }

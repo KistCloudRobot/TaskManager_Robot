@@ -23,5 +23,5 @@ PLAN CONCLUDE palletizerPackingFinish($robotID, $stationVertex) {
 		RETRACT palletizerPackingFinish($robotID, $stationVertex);
 		
 		PERFORM isro:endLog("CONCLUDE", "palletizerPackingFinish");
-	UTILITY: 20; 
+	UTILITY: 10000; 
 }

@@ -2,13 +2,14 @@ PREFIXES:
 		PREFIX isro: <http://www.arbi.com//BuiltInPlan#>;
 
 
-PLAN PERFORM RackUnloadCompleted($address) {
+PLAN PERFORM RackUnloadCompleted($address, $robot, $vertex) {
 	ID: "http://www.arbi.com//RackUnloadCompleted"
 	PRECONDITION:
 	BODY:
 		PERFORM  isro:startLog("PERFORM", "RackUnloadCompleted");
 		
-		$data = "(RackUnloadCompleted)";		
+		
+		$data = "(RackUnloadCompleted \"" + $robot + "\" " + $vertex + ")";	
 		PERFORM inform("logistic", $address, $data);
 		
 		PERFORM isro:endLog("PERFORM", "RackUnloadCompleted");

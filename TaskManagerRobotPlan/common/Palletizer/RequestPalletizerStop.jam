@@ -17,7 +17,7 @@ PLAN PERFORM RequestPalletizerStop() {
 		PERFORM isro:startLog("PERFORM", "RequestPalletizerStop");
 		
 		$actionID = $helper.getActionID($agent);
-		$communicationInstance.request($bi, "(PalletizerStop \"" + $actionID + "\")");
+		$communicationInstance.inform($bi, "(PalletizerStop \"" + $actionID + "\")");
 		
 		System.out.println("wait id : " + $actionID);
 		

@@ -7,6 +7,7 @@ PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
 		//$status == "Ready";
 		FACT isro:ManagerAddress($address);
 		$vertex == 3;
+		FACT robotStatus($robotID, "Ready");
 	BODY:
 		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
 		
@@ -30,6 +31,7 @@ PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
 		//$status == "Ready";
 		FACT isro:ManagerAddress($address);
 		$vertex == 4;
+		FACT robotStatus($robotID, "Ready");
 	BODY:
 		PERFORM isro:startLog("PERFORM", "FlatPreciseMove");
 		
@@ -39,7 +41,7 @@ PLAN PERFORM GuideMove($actionID, $vertex, $direction) {
 		
 		System.out.println("wait id : " + $actionID);
 		ASSERT RequestedAction($address, $actionID);
-		PERFORM WaitActionResult($actionID);
+		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "FlatPreciseMove");
 	UTILITY: 80; 

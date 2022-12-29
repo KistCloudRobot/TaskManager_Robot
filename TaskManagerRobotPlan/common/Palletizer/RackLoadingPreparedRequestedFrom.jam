@@ -17,7 +17,7 @@ PLAN CONCLUDE RackLoadingPreparedRequestedFrom($requester, $goalID, $goal){
 		PERFORM RackLoadingPrepared($robotID, $stationVertex);		
 		
 		$data = "(GoalResult \"" + $agent + "\" " + $goalID + " \"success\")";
-		System.out.println($data);
+		//System.out.println($data);
 		PERFORM inform("logistic", $requester, $data);
 		
 		RETRACT RackLoadingPreparedRequestedFrom($a, $b, $c);

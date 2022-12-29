@@ -35,7 +35,7 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		PERFORM isro:UpdateAgentTaskStatus("ObjectPlaced", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
 		$communicationInstance.inform($reasoner, "(goalComplete (ObjectPlaced \"" + $object +"\" \"" + $location + "\"))");
-	UTILITY: 11; 
+	UTILITY: 51; 
 
 }
 
@@ -59,12 +59,12 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
 		PERFORM isro:RequestUnload($stationVertex);
 		
-		PERFORM isro:ExitFromStation($location, $stationType);
+		PERFORM isro:ExitFromStationForPlace($location, $stationType);
 				
 		PERFORM isro:UpdateAgentTaskStatus("ObjectPlaced", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
 		$communicationInstance.inform($reasoner, "(goalComplete (ObjectPlaced \"" + $object +"\" \"" + $location + "\"))");
-	UTILITY: 11; 
+	UTILITY: 51; 
 
 }
 PLAN PERFORM ObjectPlaced($object, $location){
@@ -92,7 +92,7 @@ PLAN PERFORM ObjectPlaced($object, $location){
 		PERFORM isro:UpdateAgentTaskStatus("ObjectPlaced", "complete");
 		PERFORM isro:endLog("PERFORM", "ObjectPlaced");
 		$communicationInstance.inform($reasoner, "(goalComplete (ObjectPlaced \"" + $object +"\" \"" + $location + "\"))");
-	UTILITY: 10; 
+	UTILITY: 50; 
 
 }
 /*

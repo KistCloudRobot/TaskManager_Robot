@@ -7,12 +7,13 @@ PLAN PERFORM isro:ExitFromStationForGrab($location, $stationType){
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($util);
+		FACT isro:robot($robot);
 		FACT PalletizerAgentAddress($address);
 		$stationType == "PalletizingStation";
 	BODY:
 	
 		System.out.println("start exit");
-		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStationForGrab");
 		
 		PERFORM isro:QueryMoveType($location, "out", $result);
 		
@@ -23,9 +24,10 @@ PLAN PERFORM isro:ExitFromStationForGrab($location, $stationType){
 		PERFORM RequestStationOut($moveType, $vertex);
 //		PERFORM isro:StationMove($moveType, $result);
 		
-		PERFORM RackUnloadCompleted($address);
+		PERFORM isro:QueryStationVertex($location, $stationVertex);
+		PERFORM RackLoadCompleted($address, $robot, $stationVertex);
 		
-		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
+		PERFORM isro:endLog("PERFORM", "isro:ExitFromStationForGrab");
 		
 	UTILITY: 11; 
 
@@ -37,12 +39,13 @@ PLAN PERFORM isro:ExitFromStationForPlace($location, $stationType){
 		FACT Communication($communicationInstance);
 		FACT GLUtility($glUtility);
 		FACT ExtraUtility($util);
+		FACT isro:robot($robot);
 		FACT PalletizerAgentAddress($address);
 		$stationType == "PalletizingStation";
 	BODY:
 	
 		System.out.println("start exit");
-		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStation");
+		PERFORM  isro:startLog("PERFORM", "isro:ExitFromStationForPlace");
 		
 		PERFORM isro:QueryMoveType($location, "out", $result);
 		
@@ -53,9 +56,10 @@ PLAN PERFORM isro:ExitFromStationForPlace($location, $stationType){
 		PERFORM RequestStationOut($moveType, $vertex);
 //		PERFORM isro:StationMove($moveType, $result);
 		
-		PERFORM RackLoadCompleted($address);
+		PERFORM isro:QueryStationVertex($location, $stationVertex);
+		PERFORM RackUnloadCompleted($address, $robot, $stationVertex);
 		
-		PERFORM isro:endLog("PERFORM", "isro:ExitFromStation");
+		PERFORM isro:endLog("PERFORM", "isro:ExitFromStationForPlace");
 		
 	UTILITY: 11; 
 

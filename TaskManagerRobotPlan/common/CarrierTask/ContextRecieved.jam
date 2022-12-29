@@ -105,13 +105,13 @@ PLAN CONCLUDE ContextRecieved($contextName, $context){
 	ID: "http://www.arbi.com//BuiltInPlan#contextOnRobotTaskStatus"
 	PRECONDITION:
 		FACT GLUtility($glUtility);
-		$contextName == "onRobotTaskStatus";
+		$contextName == "robotStatus";
 	BODY:
 		
 		$robot =  $glUtility.retrieveGLExpression($context, 0);
 		
 		
-		RETRACT onRobotTaskStatus($robot, $v1);
+		RETRACT robotStatus($robot, $v1);
 		
 		$glUtility.assertGL($context);
 				

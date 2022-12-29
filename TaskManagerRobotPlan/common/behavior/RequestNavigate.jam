@@ -20,6 +20,7 @@ PLAN PERFORM isro:RequestNavigate($end){
 		
 		$actionID = $helper.getActionID($agent);
 		$data = "(RequestNavigate \"" + $actionID + "\" \"" + $robotID + "\" " + $vertex1 +" " + $end + ")";
+		System.out.println($data);
 		PERFORM request("logistic", $address, $data, $result);
 
 		System.out.println("wait id : " + $actionID);

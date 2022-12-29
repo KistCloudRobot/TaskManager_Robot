@@ -11,7 +11,7 @@ PLAN perform WaitActionResult($actionID){
 	BODY:
 		RETRACT ActionResult($actionID);
 		PERFORM ReportActionResult($address, $actionID);
-	UTILITY: 11; 
+	UTILITY: 1100; 
 }
 
 
@@ -22,19 +22,32 @@ PLAN perform WaitActionResult($actionID){
 		$result == "success";
 	BODY:
 		RETRACT ActionResult($actionID);
-	UTILITY: 10; 
+	UTILITY: 1000; 
 }
-
-
-
 
 PLAN perform WaitActionResult($actionID){
 	ID: "http://www.arbi.com//BuiltInPlan#WaitActionFailed"
+	PRECONDITION:
+		FACT ActionResult($actionID, $result);
+		$result == "fail";
+	BODY:
+		RETRACT ActionResult($actionID);
+		System.out.println("action failed : " + $actionID);
+		FAIL;
+	UTILITY: 1000; 
+}
+
+
+PLAN perform WaitActionResult($actionID){
+	ID: "http://www.arbi.com//BuiltInPlan#RequestedActionFailed"
 	PRECONDITION:
 		FACT RequestedAction($address, $actionID);
 		FACT ActionResult($actionID, $result);
 		$result == "fail";
 	BODY:
+		RETRACT ActionResult($actionID);
+		System.out.println("action failed : " + $actionID);
+		
 		FAIL;
-	UTILITY: 10; 
+	UTILITY: 1100; 
 }

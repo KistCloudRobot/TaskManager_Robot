@@ -32,9 +32,6 @@ public class GLMessageManager {
 	}
 	public String convertObjectToString(Object str) {
 		
-		System.out.println("test");
-		System.out.println(str.getClass().getName());
-		System.out.println(str.toString());
 		return str.toString();
 	}
 	

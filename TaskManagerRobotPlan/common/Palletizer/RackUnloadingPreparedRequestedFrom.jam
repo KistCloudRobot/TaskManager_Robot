@@ -15,10 +15,10 @@ PLAN CONCLUDE RackUnloadingPreparedRequestedFrom($requester, $goalID, $goal){
 		$unescapedGoal = $glUtility.unescapeGL($goal);
 		$robotID =  $glUtility.retrieveGLExpression($unescapedGoal, 0);
 		
-		System.out.println($robotID);
+		//System.out.println($robotID);
 		$stationVertex =  $glUtility.retrieveGLExpression($unescapedGoal, 1);
 		
-		System.out.println($stationVertex);
+		//System.out.println($stationVertex);
 		PERFORM RackUnloadingPrepared($robotID, $stationVertex);	
 		
 		$data = "(GoalResult \"" + $agent + "\" " + $goalID + " \"success\")";

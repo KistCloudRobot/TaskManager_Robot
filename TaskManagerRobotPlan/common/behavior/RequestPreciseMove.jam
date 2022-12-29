@@ -20,16 +20,15 @@ PLAN PERFORM PreciseMove($actionID, $vertex){
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($bi);
 		FACT isro:ManagerAddress($address);
+		FACT robotStatus($robotID, "Ready");
 	BODY:
 		PERFORM isro:startLog("PERFORM", "PreciseMove");
 		
 		$data =  "(PreciseMove \"" + $actionID + "\" " + $vertex +")";
 		
 		$communicationInstance.request($bi, $data);
-		System.out.println("wait id : " + $actionID);
 		ASSERT RequestedAction($address, $actionID);
-		PERFORM WaitActionResult($actionID);
-
+		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "PreciseMove");
 	UTILITY:80; 

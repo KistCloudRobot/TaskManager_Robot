@@ -10,8 +10,6 @@ PLAN PERFORM RequestExitPalletizer($robotID, $stationVertex) {
 		FACT ExtraUtility($helper);
 		FACT isro:BehaviorAddress($bi);
 		FACT isro:agent($agent);
-		//FACT OnRobotTaskStatus($robot, $status);
-		//$status == "Ready";
 		
 	BODY:
 		PERFORM isro:startLog("PERFORM", "RequestExitPalletizer");
