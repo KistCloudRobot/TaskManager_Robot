@@ -20,6 +20,7 @@ PLAN PERFORM CancelMove($actionID) {
 	PRECONDITION:
 		FACT Communication($communicationInstance);
 		FACT isro:BehaviorAddress($bi);
+		FACT isro:ManagerAddress($address);
 		//FACT OnRobotTaskStatus($robot, $status);
 		//$status == "Move";
 		
@@ -29,7 +30,12 @@ PLAN PERFORM CancelMove($actionID) {
 		$communicationInstance.request($bi, "(CancelMove \"" + $actionID + "\")");
 		
 		System.out.println("wait id : " + $actionID);
+		 
+		RETRIEVE RequestedAction($address, $id);
+		UNPOST PERFORM WaitActionResult($id);
+		RETRACT RequestedAction($address, $id);
 		
+		ASSERT RequestedAction($address, $actionID);
 		POST PERFORM WaitActionResult($actionID);
 		
 		PERFORM isro:endLog("PERFORM", "CancelMove");

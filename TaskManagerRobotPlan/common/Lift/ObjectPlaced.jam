@@ -23,8 +23,8 @@ PLAN PERFORM ObjectPlaced($object, $location){
 	BODY:
 		PERFORM isro:startLog("PERFORM", "ObjectPlaced");
 		PERFORM isro:UpdateAgentTaskStatus("ObjectPlaced", "start");
-		$stationType = "PalletizingStation";
 		
+		PERFORM isro:QueryStationType($location, $stationType);
 		PERFORM isro:EnterToStationForPlace($location, $stationType);
 		
 		PERFORM isro:QueryStationVertex($location, $stationVertex);
